@@ -1,0 +1,106 @@
+<?php
+
+    if(isset($_FILES['upload'])){
+
+        $errors= array();
+        $file_name = $_FILES['upload']['name'];
+        $file_size =$_FILES['upload']['size'];
+        $file_tmp =$_FILES['upload']['tmp_name'];
+        $file_type=$_FILES['upload']['type'];
+        $file_ext=strtolower(end(explode('.',$_FILES['upload']['name'])));
+
+        $expensions= array("txt");
+
+        if(in_array($file_ext,$expensions)=== false){
+            $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+        }
+
+        if($file_size > '2097152'){
+            $errors[]='File size must be excately 2 MB';
+        }
+    }
+?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/przycisk.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+    </head>
+    <body>
+        <?php echo '<div>Program dla pana Zbyszka - Kontrolka do ładowania plków</div><br><br>' ?>
+        
+        <form name="uploadForm" action="index.php" method="POST" enctype="multipart/form-data">         
+            <div class="browse-wrap">
+               <input class="title" value="Pobierz plik główny" />
+               <input type="file" name="upload" class="upload" multiple title="Wybierz plik do odczytania">
+           <!-- -->   <input type="submit" value="Odczytaj" name="submit" class="title" style="visibility: collapse"/> 
+            </div>
+            <span class="upload-path"></span>                 
+            <script type="text/javascript">
+                // Span
+                var span = document.getElementsByClassName('upload-path');
+                // Button
+                var uploader = document.getElementsByName('upload');
+                // Form
+                var form = document.getElementsByName("uploadForm");
+                // On change
+                var wiersze = [];
+                for( item in uploader ) {
+                    // Detect changes
+                    uploader[item].onchange = function() {
+                        var fileDisplayArea = document.getElementById('fileDisplayArea');
+                        var textType = /text.*/;
+                        var file = [];
+                        for(var x=0;x<this.files.length;x++)
+                        {
+                            span[x].innerHTML = this.files[x].name;      
+                            file.push(this.files[x]);
+                            
+                        }       
+                        if (file.type.match(textType)) {
+                            var reader = new FileReader();
+                            reader.onload = function(e) {
+                                
+                                xmlHTTP = new XMLHttpRequest();
+                                                                
+                                var str = reader.result;
+                                str = "q=" + str;//encodeURIComponent(str);
+                                alert(str);
+                                
+                                xmlHTTP.open("POST", "tabelka.php", true);
+                                xmlHTTP.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                                xmlHTTP.setRequestHeader("Content-length", str.length);
+                                xmlHTTP.setRequestHeader("Connection", "close");
+                                xmlHTTP.onreadystatechange = function() {
+                                    //Call a function when the state changes.
+                                    if(xmlHTTP.readyState == 4 && xmlHTTP.status == 200) {
+                                        document.write(xmlHTTP.responseText);                                        
+                                    }
+                                }
+                                xmlHTTP.send(str);    
+                                
+                            }
+                            reader.readAsText(file);    
+                        } 
+                        else 
+                        {
+                            fileDisplayArea.innerText = "File not supported!"
+                        }
+                    }
+                }    
+            </script>                
+            <!-- 
+            <input type="file" name="file" value="" width="100" />            
+            -->            
+        </form>
+           
+        <pre id="fileDisplayArea">
+            
+
+        </pre>
+        
+    </body>
+</html>

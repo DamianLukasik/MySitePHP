@@ -128,18 +128,18 @@
             {
                 for(var i=0;i<row;i++)
                 {
-                    var elem_ = [];
+                    var elem_ = []; 
+                    var e_ = [];
                     for(var j = 0;j<col;j++ )
                     {                        
                         elem_.push(parseFloat(document.getElementById('dost'+j+'_'+i).innerHTML));
                         document.getElementById('dost'+j+'_'+i).style.backgroundColor = kolor2; 
                     //    alert(elem_[j]);
+                        e_.push(roznica_procentowa(elem_[j],a));       
+                        alert("różnica procentowa"+e_[j]);
                     }  
-                                        
-                    e0 = roznica_procentowa(elem_[0],a);
                     
-                    var e_ = [];
-                                        
+                    /*
                 //    alert(e0);
                     for(var y=1;y<elem_.length;y++)
                     {
@@ -155,92 +155,107 @@
                      
                   //  alert("różnica procentowa = "+e0+"  "+elem_[1]+"="+e1+"  --  "+elem_[2]+"="+e2);
                     document.getElementById('dost'+(wart+1)+'_'+i).style.backgroundColor = kolor1;
+     */
                 }     
             }
         }     
         
-        function wczytaj(elem){            
-        //    alert(elem.name);
-         //   var uploader = document.getElementsByName(elem.name);
-          //  uploader.files[i];            
-            var reader = new FileReader();
-            var spr_1="";
-            reader.onload = function (evt) {
-                if (evt.target.readyState == FileReader.DONE) {
-                    var s = evt.target.result;
-                    spr_1 = s.split("\n");                   
-                    var arr = [];
-                                           
-                    for(var i=0;i<spr_1.length;i++)
-                    {  
-                        arr.push(spr_1[i]);
-                  /*      spr_2 = spr_1[i].split("|");
-                        var pos = reg.test(spr_2[0]);                                               
-                        if(spr_2[0].length <= 14 && !pos && spr_2[1].length <= 44)
-                        {
-                            str += spr_1[i]+"\n"; 
-                            arr
-                        }*/
-                    }  
-                //    alert(str);
-                    var div_btn = document.getElementById("pn_panel_btn");
-                    var numer = div_btn.childElementCount+1;
-                    var node = document.createElement("DIV");
-                    node.setAttribute("class", "browse-wrap");
-                    node.style.width = "250px";
-                    var tit = document.createElement("INPUT");
-                    tit.setAttribute("class", "title");
-                    tit.value="Zaczytaj ofertę dostawcy nr "+numer;
-                    tit.style.margin = "0px";
-                    tit.style.textAlign = "left";
-                    tit.style.width = "250px";            
-                    node.appendChild(tit);
-                    var upl = document.createElement("INPUT");       
-                    upl.type = "file";
-                    upl.name = "upload_"+numer;
-                    upl.addEventListener(
-                        'change',
-                        function() { wczytaj(this); },
-                        false
-                     );
-                    upl.setAttribute("class", "upload");
-                    node.appendChild(upl); /**/
-                    div_btn.appendChild(node);
+        function wczytaj(elem){              
+            var numer = document.getElementById("pn_panel_btn").childElementCount-1;            
+          /*  if(elem.name[7]==numer)
+            {                
+                alert(elem.name[7]+"  "+numer);
+                var reader = new FileReader();
+                reader.onload = function (evt) {
                     
-                 //   alert();   
                     
-                    var tab_produkty = document.getElementById("tab_produkty");
-                    var tblHeadObj = tab_produkty.tHead;
-                    for (var h=0; h<tblHeadObj.rows.length; h++) {
-                            var newTH = document.createElement('th');
-                            tblHeadObj.rows[h].appendChild(newTH);
-                            newTH.innerHTML = 'Dostawca '+(numer-2);
+                };
+                reader.readAsText(elem.files[0]);//
+            }
+            else
+            {*/
+            //   var uploader = document.getElementsByName(elem.name);
+             //  uploader.files[i];            
+                var reader = new FileReader();
+                var spr_1="";
+                reader.onload = function (evt) {
+                    if (evt.target.readyState == FileReader.DONE) {
+                        var s = evt.target.result;
+                        spr_1 = s.split("\n");                   
+                        var arr = [];
+
+                        for(var i=0;i<spr_1.length;i++)
+                        {  
+                            arr.push(spr_1[i]);
+                      /*      spr_2 = spr_1[i].split("|");
+                            var pos = reg.test(spr_2[0]);                                               
+                            if(spr_2[0].length <= 14 && !pos && spr_2[1].length <= 44)
+                            {
+                                str += spr_1[i]+"\n"; 
+                                arr
+                            }*/
+                        }  
+                    //    alert(str);
+                        var div_btn = document.getElementById("pn_panel_btn");
+                        var numer = div_btn.childElementCount+1;
+                        var node = document.createElement("DIV");
+                        node.setAttribute("class", "browse-wrap");
+                        node.style.width = "250px";
+                        var tit = document.createElement("INPUT");
+                        tit.setAttribute("class", "title");
+                        tit.value="Zaczytaj ofertę dostawcy nr "+numer;
+                        tit.style.margin = "0px";
+                        tit.style.textAlign = "left";
+                        tit.style.width = "250px";            
+                        node.appendChild(tit);
+                        var upl = document.createElement("INPUT");       
+                        upl.type = "file";
+                        upl.name = "upload_"+(numer-1);
+                        upl.addEventListener(
+                            'change',
+                            function() { wczytaj(this); },
+                            false
+                         );
+                        upl.setAttribute("class", "upload");
+                        node.appendChild(upl); /**/
+                        div_btn.appendChild(node);
+
+                     //   alert();   
+
+                        var tab_produkty = document.getElementById("tab_produkty");
+                        var tblHeadObj = tab_produkty.tHead;
+                        for (var h=0; h<tblHeadObj.rows.length; h++) {
+                                var newTH = document.createElement('th');
+                                tblHeadObj.rows[h].appendChild(newTH);
+                                newTH.innerHTML = 'Dostawca '+(numer-2);
+                        }
+                        var rows = tab_produkty.rows.length;
+                     //   alert(rows);
+                    // alert(numer-2);
+                        var spr_2 = [];
+                        var tblBodyObj = tab_produkty.tBodies[0];
+                        for (var i=0; i<rows; i++) {
+                                var newCell = tblBodyObj.rows[i].insertCell(numer);
+                              //  alert(arr[i]);
+                                spr_2 = arr[i].split("|");
+                                newCell.id="dost"+(numer-2)+"_"+i;
+                                newCell.innerHTML = ""+spr_2[2];
+                        }
+
+                       /*
+                ."<input onchange='wczytaj(this);'       
+                type='file' name='upload_1' class='upload' title='Wybierz plik do odczytania'>"
+
+                        */
                     }
-                    var rows = tab_produkty.rows.length;
-                 //   alert(rows);
-                // alert(numer-2);
-                    var spr_2 = [];
-                    var tblBodyObj = tab_produkty.tBodies[0];
-                    for (var i=0; i<rows; i++) {
-                            var newCell = tblBodyObj.rows[i].insertCell(numer);
-                          //  alert(arr[i]);
-                            spr_2 = arr[i].split("|");
-                            newCell.id="dost"+(numer-2)+"_"+i;
-                            newCell.innerHTML = ""+spr_2[2];
-                    }
-                       
-                    /*
-            ."<input onchange='wczytaj(this);'       
-             type='file' name='upload_1' class='upload' title='Wybierz plik do odczytania'>"
-         
-                     */
-                }
-            };
-            reader.readAsText(elem.files[0]);//uploader.files[0]);
+                };
+                reader.readAsText(elem.files[0]);//uploader.files[0]);
+          //  }
         }        
         
-        function roznica_procentowa(wart, procent){            
+        function roznica_procentowa(a, b){            
             var wynik = ((100-procent)*wart)/(100);
+            //var wynik = (100-((a*100)/b);
             return wynik;
         }
         

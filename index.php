@@ -24,10 +24,10 @@
 <html>
     <head>
         <title>TODO supply a title</title>
-        <meta http-equiv="content-type" content="text/html; charset=iso-8859-2" />
+        <meta http-equiv=”Content-type” content=”text/html; charset=UTF-8″>     
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="css/przycisk.css" rel="stylesheet" type="text/css">
-        <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>        
     </head>
     <body>
         <?php 
@@ -63,6 +63,7 @@
                         var _s; 
                         var s_;
                         var str = "q=";
+                        var reg = new RegExp("[A-Z]|[a-z]+");
                                               
                       //  alert(this.files[1].name+"   "+this.files.length);
                      /*   for(var x=0;x<this.files.length;x++){
@@ -100,28 +101,50 @@
                            //     reader.readAsText(file);  
                                 
                                 var j = 0, k = this.files.length;
+                                if(k <= 5){
+                                
                                 for (var i = 0; i < k; i++) {
                                     var reader = new FileReader();
+                                    var spr_1="";
                                  //   alert();
-                                     reader.onloadend = function (evt) {
+                                     reader.onload = function (evt) {
                                         if (evt.target.readyState == FileReader.DONE) {
                                             
                                          //   alert(evt.target.result+"");
                                             
-                                           // data["File_Content" + j] = evt.target.result;
-                                            str += evt.target.result+"\n";
-                                            
+                                            // data["File_Content" + j] = evt.target.result;
+                                           
+                                            //zrobić walidacje danych
+                                           
+                                            var s = evt.target.result;
+                                           
+                                            spr_1 = s.split("\n");
+                                            var spr_2 = "";
+                                           
+                                            for(var i=0;i<spr_1.length;i++)
+                                            {
+                                             //   alert(spr[i]);
+                                                spr_2 = spr_1[i].split("|");
+                                                var pos = reg.test(spr_2[0]);                                               
+                                                if(spr_2[0].length <= 14 && !pos && spr_2[1].length <= 44)
+                                                {
+                                                 //   alert(spr_2[0].length + " " + spr_2[1]); 
+                                                    str += spr_1[i]+"\n";                                                 
+                                                }
+                                            }                                          
+                                       //     alert(str);
+                                           
+                                          //  str += evt.target.result+"\n";
+                                         //   alert(evt.target.result[15]);
                                             j++;
                                         /*    if (j == k){
                                                 alert('All files read');
                                             }*/
                                         }
                                     };
-                                    reader.readAsBinaryString(this.files[i]);
+                                    reader.readAsText(this.files[i]);
                                 }
                                 /*
-                                
-                                
                                 var j = 0, k = files.length;
                                 for (var i = 0; i < k; i++) {
                                     var reader = new FileReader();
@@ -135,8 +158,7 @@
                                         }
                                     };
                                     reader.readAsBinaryString(files[i]);
-                                }
-                                
+                                }                                
                                 */
                               //  alert(_s);                                
                               //  alert(str);   
@@ -146,12 +168,9 @@
                                 fileDisplayArea.innerText = "File not supported!";
                             }*/
                            // alert(x);
-                    //    }
-                        
-                        xmlHTTP = new XMLHttpRequest();  
-                        
-                     //   alert(str);
-                        
+                    //    }                        
+                        xmlHTTP = new XMLHttpRequest();                          
+                     //   alert(str);                        
                         xmlHTTP.open("POST", "tabelka.php", true);
                         xmlHTTP.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                         xmlHTTP.setRequestHeader("Content-length", str.length);
@@ -168,18 +187,19 @@
                         }
                         setTimeout(f, 800);
                       //  xmlHTTP.send(str);
+                        }
+                        else
+                        {
+                            alert("zbyt dużo plików do odczytania");
+                        }
                     };
-                }    
+                }     
+                
             </script>                
             <!-- 
             <input type="file" name="file" value="" width="100" />            
             -->            
         </form>
-           
-        <pre id="fileDisplayArea">
-            
-
-        </pre>
-        
+                           
     </body>
 </html>

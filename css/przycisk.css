@@ -7,7 +7,7 @@ div.browse-wrap {
     position: relative;
     background-color: #a6c9ff;
     border: solid 3px #d2e7fa;
-    width: 175px;
+    width: 300px;
     margin: 5px 75px 5px 75px;
     padding: 5px 5px 5px 5px;
     border-radius:10px /10px;
@@ -55,10 +55,10 @@ span.upload-path {
     margin: 5px 75px 5px 75px;
     padding: 5px 5px 5px 5px;
 }
-table, th, td {
+table.wyniki, th.wyniki, td.wyniki {
     border: 1px solid black;
     padding: 1px;
 }
-table {
+table.wyniki {
     border-spacing: 2px;
 }

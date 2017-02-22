@@ -42,7 +42,7 @@
             <div class="browse-wrap">
                <input class="title" value="Pobierz plik główny" />
                <input type="file" name="upload" class="upload" multiple title="Wybierz plik do odczytania">
-           <!-- -->   <input type="submit" value="Odczytaj" name="submit" class="title" style="visibility: collapse"/> 
+           <!--    <input type="submit" value="Odczytaj" name="submit" class="title" style="visibility: collapse"/> -->
             </div>
             <span class="upload-path"></span>                 
             <script type="text/javascript">                

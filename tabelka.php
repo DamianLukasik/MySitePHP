@@ -26,10 +26,30 @@
             ."<input class='title' value='Zaczytaj ofertę dostawcy głównego' style='margin: 0px;text-align: left;width: 250px;'/>"
             ."<input onchange='wczytaj(this);' type='file' name='upload_0' class='upload'>"
             ."</div>";
-            echo "<div class='browse-wrap' style='width: 250px;'>"
-            ."<input class='title' value='Zaczytaj ofertę dostawcy nr 2' style='margin: 0px;text-align: left;width: 250px;'/>"
-            ."<input onchange='wczytaj(this);' type='file' name='upload_1' class='upload'>"
-            ."</div>";
+            $leng_arr = array();
+            if(isset($_POST['q'])){       
+                $czesci = explode("\n", $_POST['q']); 
+                $count = count($czesci);
+                for($i = 0; $i < $count-1; $i++)
+                { 
+                    $str = $czesci[$i];
+                    $tab = explode("|",$str);
+                    $leng = count($tab) - 3;
+                    array_push($leng_arr,$leng);
+              //      echo $leng;
+                }                     
+            }
+            $leng_ = max($leng_arr);
+            for($i=0; $i<=$leng_ ;$i++)
+            {
+                echo "<div class='browse-wrap' style='width: 250px;'>"
+                ."<input class='title' value='Zaczytaj ofertę dostawcy nr ".($i+1)."' style='margin: 0px;text-align: left;width: 250px;'/>"
+                ."<input onchange='wczytaj(this);' type='file' name='upload_1' class='upload'>"
+                ."</div>";                 
+            }
+            
+                          
+           // }
             /*
            
             
@@ -64,7 +84,7 @@
                         $max =$max + 1;
                      //   echo "<th>Dostawca ".($o-1)."</th>";
                     }
-                    array_push($max_arr,$max);                    
+                    array_push($max_arr,$max);
                 }
                 
                 $leng_ = max($max_arr);
@@ -141,31 +161,44 @@
             {//wyszukuje najmniejszą
                 for(var i=0;i<row;i++)
                 {
-                  //  alert(col);
+                   // alert(row);
                     var elem_ = [];
                     for(var j = 0;j<col;j++ )
                     {
-                        elem_.push(parseFloat(document.getElementById('dost'+j+'_'+i).innerHTML));
-                    //    alert(elem_[j]);
+                      //  alert(j+" "+col+"  ");
+                        if(document.getElementById('dost'+j+'_'+i)!=null)
+                        {
+                        //    alert(document.getElementById('dost'+j+'_'+i).innerHTML);
+                            elem_.push(parseFloat(document.getElementById('dost'+j+'_'+i).innerHTML));
+                        }
+                        else
+                        {
+                            break;
+                         //   alert();
+                        }                        
+                        
+                     //   alert(elem_[j]);
                     }
+                  //  alert(elem_.length);
                   /*  elem_ = [,
                             parseFloat(document.getElementById('dost1_'+i).innerHTML),
                             parseFloat(document.getElementById('dost2_'+i).innerHTML)];*/
     
                     var wart = Math.min.apply(null, elem_);
-                    wart = elem_.indexOf(wart);  
-                    
-                    for(var j = 0;j<col;j++ )
-                    {                        
-                        elem_.push(parseFloat(document.getElementById('dost'+j+'_'+i).innerHTML));
+                    wart = elem_.indexOf(wart);
+                 //   alert(wart+" "+i+" "+elem_+"  ");
+                    for(var j = 0;j<elem_.length;j++ )
+                    {
+                     //   elem_.push(parseFloat(document.getElementById('dost'+j+'_'+i).innerHTML));
                         document.getElementById('dost'+j+'_'+i).style.backgroundColor = kolor2;
                       //  alert(elem_[j]);
-                    }                    
+                    }
                //     document.getElementById('dost0_'+i).style.backgroundColor = kolor2;
                 //    document.getElementById('dost1_'+i).style.backgroundColor = kolor2;
                 //    document.getElementById('dost2_'+i).style.backgroundColor = kolor2;             
                     document.getElementById('dost'+wart+'_'+i).style.backgroundColor = kolor1;
-                }                             
+                 //   alert(document.getElementById('dost'+wart+'_'+i).value);
+                }
             }
             else
             {//wyszukuje różnice
@@ -174,43 +207,64 @@
                     var elem_ = []; 
                     var e_;
                     for(var j = 0;j<col;j++ )//po wszystkich komórkach
-                    {                        
-                        elem_.push(parseFloat(document.getElementById('dost'+j+'_'+i).innerHTML));
-                        document.getElementById('dost'+j+'_'+i).style.backgroundColor = kolor2; 
+                    {            
+                        if(document.getElementById('dost'+j+'_'+i)!=null)
+                        {
+                            elem_.push(parseFloat(document.getElementById('dost'+j+'_'+i).innerHTML));
+                            document.getElementById('dost'+j+'_'+i).style.backgroundColor = kolor2;                             
+                        }
+                        else
+                        {
+                            break;                            
+                        }
                        // alert(elem_[j]);
                        // e_.push(roznica_procentowa(elem_[j],a));       
                        // alert("różnica procentowa"+e_[j]);
                     }  
                     
                     var r = 0;
-                    var wart = 0;
-                    for(var j=1;j<col;j++)
+                    var wart_arr = [];
+                    for(var j=1;j<elem_.length;j++)
                     {
                         if(elem_[0]>elem_[j])
-                        {                            
-                            wart = roznica_procentowa(elem_[0],elem_[j]);
+                        {
+                            wart_arr.push(roznica_procentowa(elem_[0],elem_[j]));
                         }
                         else
                         {
-                            wart = roznica_procentowa(elem_[j],elem_[0]);
+                            wart_arr.push(roznica_procentowa(elem_[j],elem_[0]));
                         }                        
                     //    alert("różnica procentowa  > "+elem_[0]+" - "+elem_[j]+" < = "+wart);
+                    }
+                    var max_war_ar = Math.max.apply(null, wart_arr);
+                //    alert(wart_arr.length);
+                    for(var k=0;k<wart_arr.length;k++)
+                    {
+                      //  alert(wart_arr[k] + " - " + k);
+                        if(wart_arr[k]>a & wart_arr[k]==max_war_ar)
+                        {
+                            for(var j=0;j<k;j++)
+                            {
+                                document.getElementById('dost'+(j+1)+'_'+i).style.backgroundColor = kolor2;
+                            }                             
+                            document.getElementById('dost'+(k+1)+'_'+i).style.backgroundColor = kolor1;
+                        }
+                    }
+                    
+                    /*
                         if(wart>a)
                         {
                             if(j!=0)
                             {
-                                for(var k=0;k<j;k++)
-                                {
-                                    document.getElementById('dost'+k+'_'+i).style.backgroundColor = kolor2;
-                                }                                
+                                                               
                             }
-                            document.getElementById('dost'+j+'_'+i).style.backgroundColor = kolor1;
+                            
                         }
                         else
                         {
                        //     alert();
-                        }
-                    }
+                        }*/
+                  //  }                    
                     /*
                     for(var j=0;j<col-1;j++)
                     {
@@ -246,12 +300,13 @@
                   //  alert("różnica procentowa = "+e0+"  "+elem_[1]+"="+e1+"  --  "+elem_[2]+"="+e2);
                     document.getElementById('dost'+(wart+1)+'_'+i).style.backgroundColor = kolor1;
      */
-                }     
+                }
             }
         }     
         
         function wczytaj(elem){              
-            var numer = document.getElementById("pn_panel_btn").childElementCount-1;            
+            var numer = document.getElementById("pn_panel_btn").childElementCount-1;   
+         //   alert(numer);
           /*  if(elem.name[7]==numer)
             {                
                 alert(elem.name[7]+"  "+numer);
@@ -293,7 +348,7 @@
                         node.style.width = "250px";
                         var tit = document.createElement("INPUT");
                         tit.setAttribute("class", "title");
-                        tit.value="Zaczytaj ofertę dostawcy nr "+numer;
+                        tit.value="Zaczytaj ofertę dostawcy nr "+(numer-1);
                         tit.style.margin = "0px";
                         tit.style.textAlign = "left";
                         tit.style.width = "250px";            

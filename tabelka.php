@@ -20,7 +20,7 @@
         <?php 
         
             echo "Tabelka z produktami<br><br>";   
-            
+        //    echo ''.$_POST['q'];
             echo "<table style='border:none;'><tr><td style='border:none;'><div id='pn_panel_btn'>";
             echo "<div class='browse-wrap' style='width: 250px;'>"
             ."<input class='title' value='Zaczytaj ofertę dostawcy głównego' style='margin: 0px;text-align: left;width: 250px;'/>"
@@ -48,10 +48,37 @@
                 . "<thead><tr>"
                         . "<th>Kod kreskowy</th>"
                         . "<th>Nazwa</th>"
-                        . "<th>Dostawca główny</th></tr></thead>";
+                        . "<th>Dostawca główny</th>";
+                
+                $max_arr =  array();
+                $max = 0;
+                
+                for($i = 0; $i < $count-1; $i++)
+                {  
+                    $str = $czesci[$i];
+                    $tab = explode("|",$str); 
+                    $leng = count($tab);
+                    $max = 0;
+                    for($o=2; $o < $leng; $o++)
+                    {
+                        $max =$max + 1;
+                     //   echo "<th>Dostawca ".($o-1)."</th>";
+                    }
+                    array_push($max_arr,$max);                    
+                }
+                
+                $leng_ = max($max_arr);
+                for($o=2; $o <= $leng_; $o++)
+                {
+                    echo "<th>Dostawca ".($o-1)."</th>";
+                }
+                
                    /*     . "<th>Dostawca 1</th>"
-                        . "<th>Dostawca 2</th>";
-                    . "<tfoot><tr>"
+                        . "<th>Dostawca 2</th>"
+                        . "<th>Dostawca 3</th>"*/
+                    echo  "</tr></thead>";
+                   /* . "<tfoot><tr>"
+                        . "<td> </td>"
                         . "<td> </td>"
                         . "<td> </td>"
                         . "<td> </td>"
@@ -66,17 +93,33 @@
                  //   $dost1 = $tab[3];//*$roznica_procentowa;
                 //    $dost2 = $tab[4];
                     
+                    //
+                    
                     $str = "<tr>"
                             . "<td >".$tab[0]."</td>"
-                            . "<td >".$tab[1]."</td>"
-                            . "<td style='backgroundColor: #FFFFFF;' id='dost0_".$i."'>".$dost0."</td>"
+                            . "<td >".$tab[1]."</td>";                    
+                    
+                    $leng = count($tab);
+                    for($o=2; $o < $leng; $o++)
+                    {
+                     //   echo "<td>".($o-2)."</td>";
+                        $str = $str."<td style='backgroundColor: #FFFFFF;' id='dost".($o-2)."_".$i."'>".$tab[$o]."</td>";
+                    }
+                //    echo "</tr>"
+                  //  $str = $str.""
+                    //
+                      //      . "<td style='backgroundColor: #FFFFFF;' id='dost0_".$i."'>".$dost0."</td>"
                           //  . "<td style='backgroundColor: #FFFFFF;' id='dost1_".$i."'>".$dost1."</td>"
                           //  . "<td style='backgroundColor: #FFFFFF;' id='dost2_".$i."'>".$dost2."</td>"
-                            . "</tr>";
+                     //       . "</tr>";
                  //   $str = iconv(mb_detect_encoding($str), "utf-8//IGNORE",$str);                     
                     echo $str;
                 }
                 echo "</td></tr></table><br></td></tr></table>";
+            }
+            else
+            {
+                echo '$_POST jest pusty';
             }
         ?>
              
@@ -95,7 +138,7 @@
           //  alert(col+" "+row);
             var e0,e1,e2;
             if(a==0)
-            {
+            {//wyszukuje najmniejszą
                 for(var i=0;i<row;i++)
                 {
                   //  alert(col);
@@ -125,19 +168,66 @@
                 }                             
             }
             else
-            {
-                for(var i=0;i<row;i++)
+            {//wyszukuje różnice
+                for(var i=0;i<row;i++)//po wszystkich wierszach
                 {
                     var elem_ = []; 
-                    var e_ = [];
-                    for(var j = 0;j<col;j++ )
+                    var e_;
+                    for(var j = 0;j<col;j++ )//po wszystkich komórkach
                     {                        
                         elem_.push(parseFloat(document.getElementById('dost'+j+'_'+i).innerHTML));
                         document.getElementById('dost'+j+'_'+i).style.backgroundColor = kolor2; 
-                    //    alert(elem_[j]);
-                        e_.push(roznica_procentowa(elem_[j],a));       
-                        alert("różnica procentowa"+e_[j]);
+                       // alert(elem_[j]);
+                       // e_.push(roznica_procentowa(elem_[j],a));       
+                       // alert("różnica procentowa"+e_[j]);
                     }  
+                    
+                    var r = 0;
+                    var wart = 0;
+                    for(var j=1;j<col;j++)
+                    {
+                        if(elem_[0]>elem_[j])
+                        {                            
+                            wart = roznica_procentowa(elem_[0],elem_[j]);
+                        }
+                        else
+                        {
+                            wart = roznica_procentowa(elem_[j],elem_[0]);
+                        }                        
+                    //    alert("różnica procentowa  > "+elem_[0]+" - "+elem_[j]+" < = "+wart);
+                        if(wart>a)
+                        {
+                            if(j!=0)
+                            {
+                                for(var k=0;k<j;k++)
+                                {
+                                    document.getElementById('dost'+k+'_'+i).style.backgroundColor = kolor2;
+                                }                                
+                            }
+                            document.getElementById('dost'+j+'_'+i).style.backgroundColor = kolor1;
+                        }
+                        else
+                        {
+                       //     alert();
+                        }
+                    }
+                    /*
+                    for(var j=0;j<col-1;j++)
+                    {
+                        e_ = [];
+                      //  for(var k=j+1;k<col;k++)
+                      //  {
+                          //  alert("> "+elem_[j]+" - "+elem_[k]+" <");
+                          //  e_.push(roznica_procentowa(elem_[j],elem_[k])); 
+                            wart = roznica_procentowa(elem_[0],elem_[j+1]);
+                          //  alert("różnica procentowa"+e_[r++]);
+                            alert("różnica procentowa  > "+elem_[j]+" - "+elem_[k]+" < = "+wart);
+                            if(wart>a)
+                            {
+                              //  document.getElementById('dost'+j+'_'+i).style.backgroundColor = kolor2;
+                            }
+                      //  }                        
+                    }*/
                     
                     /*
                 //    alert(e0);
@@ -254,8 +344,8 @@
         }        
         
         function roznica_procentowa(a, b){            
-            var wynik = ((100-procent)*wart)/(100);
-            //var wynik = (100-((a*100)/b);
+          //  var wynik = ((100-procent)*wart)/(100);
+            var wynik = (((a*100)/b)-100);
             return wynik;
         }
         

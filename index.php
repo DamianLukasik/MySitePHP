@@ -63,6 +63,8 @@
                         var _s; 
                         var s_;
                         var str = "q=";
+                        var str_tab = [];
+                        var str_tab_produkt = [];
                         var reg = new RegExp("[A-Z]|[a-z]+");
                                               
                       //  alert(this.files[1].name+"   "+this.files.length);
@@ -128,21 +130,41 @@
                                                 var pos = reg.test(spr_2[0]);                                               
                                                 if(spr_2[0].length <= 14 && !pos && spr_2[1].length <= 44)
                                                 {
-                                                 //   alert(spr_2[0].length + " " + spr_2[1]); 
-                                                    str += spr_1[i]+"\n";                                                 
+                                                 //   alert(spr_2[0].length + " " + spr_2[1]);
+                                                    var g = spr_1[i].split("|")[1]+"";
+                                                //    alert(g);
+                                                  //  if(str.indexOf(g)!=-1)
+                                                //    alert(str_tab+"\n"+str_tab_produkt);
+                                                    if(str_tab_produkt.indexOf(g)!=-1)
+                                                    {
+                                                //        alert("> "+g+" < - "+i+"  "+str_tab[i]);
+                                                        str_tab[i] += "|"+ spr_1[i].split("|")[2];
+                                                    }
+                                                    else
+                                                    {
+                                                        str_tab.push(spr_1[i]);
+                                                        str_tab_produkt.push(g);
+                                                    }
                                                 }
-                                            }                                          
+                                            }
                                        //     alert(str);
                                            
                                           //  str += evt.target.result+"\n";
                                          //   alert(evt.target.result[15]);
+                                                                                  
+                                            //alert(str_tab);
+                                            str = "q=";
+                                            for(var i=0; i<str_tab.length; i++)
+                                            {
+                                             //   alert(str_tab[i]);
+                                                str += str_tab[i]+"\n";
+                                            }
+                                       //     alert(str);
+                                         
                                             j++;
-                                        /*    if (j == k){
-                                                alert('All files read');
-                                            }*/
                                         }
                                     };
-                                    reader.readAsText(this.files[i]);
+                                    reader.readAsText(this.files[i]);                                    
                                 }
                                 /*
                                 var j = 0, k = files.length;
@@ -182,10 +204,10 @@
                             }
                         };
                         function f() {
-                        //    alert(str);
+                            alert(str);
                             xmlHTTP.send(str);
                         }
-                        setTimeout(f, 800);
+                        setTimeout(f, 950);
                       //  xmlHTTP.send(str);
                         }
                         else

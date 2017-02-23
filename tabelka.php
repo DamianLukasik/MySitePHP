@@ -231,6 +231,7 @@
                     
                     var r = 0;
                     var wart_arr = [];
+                    /*
                     for(var j=1;j<elem_.length;j++)
                     {
                         var roz = 0;
@@ -251,44 +252,28 @@
                             wart_arr.push(1024);
                         }
                     //    alert("różnica procentowa  > "+elem_[0]+" - "+elem_[j]+" < = "+wart);
-                    }
-                    
-                    var w     = Math.min.apply(null, wart_arr);
-                    var w_idx = wart_arr.indexOf(w);
-                //    alert(wart_arr+"\n"+w+"  "+w_idx);
-                    /*
-                    for(var a_=a; a>0; a--)
-                    {
-                        if(w!=1024)
-                        {
-                         //   alert(w+" "+w_idx);
-                            document.getElementById('dost'+(w_idx+1)+'_'+i).style.backgroundColor = kolor1;
-                            break;
-                        }
-                        else
-                        {
-                            wart_arr = oblicz_roznice(elem_,a-1);
-                            w        = Math.min.apply(null, wart_arr);
-                            w_idx    = wart_arr.indexOf(w);
-                        }
                     }*/
-                
-                    var log = true;
-                    while(log)
+                    var w;
+                    var w_idx;
+                    
+                    for(var a__=a;a>0;a__--)
                     {
-                        if(w!=1024)
+                        wart_arr = oblicz_roznice(elem_,a__);
+
+                        w     = Math.min.apply(null, wart_arr);
+                        w_idx = wart_arr.indexOf(w);
+
+                      //  alert(wart_arr+" \n"+w_idx+"  "+w);    
+                        if(w!="1024")
                         {
-                            alert(w+" "+w_idx);
-                            document.getElementById('dost'+(w_idx+1)+'_'+i).style.backgroundColor = kolor1;
+                            document.getElementById('dost'+(w_idx+1)+'_'+i).style.backgroundColor = kolor1;       
                             break;
                         }
                         else
                         {
-                            a=a-1;
-                            wart_arr = oblicz_roznice(elem_,a);
-                            w        = Math.min.apply(null, wart_arr);
-                            w_idx    = wart_arr.indexOf(w);
-                            alert(a+" \n tabela "+wart_arr+" \nwartosc = "+w+" indddex = "+w_idx);
+                            document.getElementById('dost0_'+i).style.backgroundColor = kolor1;    
+                            break;
+                      //      alert();
                         }
                     }
                   /**/
@@ -372,7 +357,7 @@
                 else
                 {
                     roz = roznica_procentowa(elem_[j],elem_[0]);
-                }  
+                }
                 if(roz>=a)
                 {
                     wart_arr.push(roz);
@@ -380,9 +365,8 @@
                 else
                 {
                     wart_arr.push(1024);
-                }
-                    //    alert("różnica procentowa  > "+elem_[0]+" - "+elem_[j]+" < = "+wart);
-                }
+                }//    alert("różnica procentowa  > "+elem_[0]+" - "+elem_[j]+" < = "+wart);
+            }
             return wart_arr;
         }
         

@@ -24,7 +24,7 @@
             echo "<table style='border:none;'><tr><td style='border:none;'><div id='pn_panel_btn'>";
             echo "<div class='browse-wrap' style='width: 250px;'>"
             ."<input class='title' value='Zaczytaj ofertę dostawcy głównego' style='margin: 0px;text-align: left;width: 250px;'/>"
-            ."<input onchange='wczytaj(this);' type='file' name='upload_0' class='upload'>"
+            ."<input onchange='wczytaj(this,0);' type='file' name='upload_0' class='upload'>"
             ."</div>";
             $leng_arr = array();
             if(isset($_POST['q'])){       
@@ -44,7 +44,7 @@
             {
                 echo "<div class='browse-wrap' style='width: 250px;'>"
                 ."<input class='title' value='Zaczytaj ofertę dostawcy nr ".($i+1)."' style='margin: 0px;text-align: left;width: 250px;'/>"
-                ."<input onchange='wczytaj(this);' type='file' name='upload_1' class='upload'>"
+                ."<input onchange='wczytaj(this,".($i+1).");' type='file' name='upload_1' class='upload'>"
                 ."</div>";                 
             }
             
@@ -154,7 +154,7 @@
             var a = parseInt(document.getElementById('txt_roznica_procentowa').value);
             var row = parseInt(document.getElementById('tab_produkty').rows.length);
             var col = parseInt(document.getElementById('tab_produkty').rows[0].cells.length)-2;
-            
+            wyczysc_z_kolorow();
           //  alert(col+" "+row);
             var e0,e1,e2;
             if(a==0)
@@ -169,7 +169,11 @@
                         if(document.getElementById('dost'+j+'_'+i)!=null)
                         {
                         //    alert(document.getElementById('dost'+j+'_'+i).innerHTML);
-                            elem_.push(parseFloat(document.getElementById('dost'+j+'_'+i).innerHTML));
+                            
+                            if(j!=0)
+                            {//alert(j+" "+i);
+                                elem_.push(parseFloat(document.getElementById('dost'+j+'_'+i).innerHTML));
+                            }
                         }
                         else
                         {
@@ -195,8 +199,11 @@
                     }
                //     document.getElementById('dost0_'+i).style.backgroundColor = kolor2;
                 //    document.getElementById('dost1_'+i).style.backgroundColor = kolor2;
-                //    document.getElementById('dost2_'+i).style.backgroundColor = kolor2;             
-                    document.getElementById('dost'+wart+'_'+i).style.backgroundColor = kolor1;
+                //    document.getElementById('dost2_'+i).style.backgroundColor = kolor2;  
+                    if(elem_.length>=1)
+                    {
+                        document.getElementById('dost'+(wart+1)+'_'+i).style.backgroundColor = kolor1;
+                    }                    
                  //   alert(document.getElementById('dost'+wart+'_'+i).value);
                 }
             }
@@ -226,22 +233,74 @@
                     var wart_arr = [];
                     for(var j=1;j<elem_.length;j++)
                     {
+                        var roz = 0;
                         if(elem_[0]>elem_[j])
                         {
-                            wart_arr.push(roznica_procentowa(elem_[0],elem_[j]));
+                            roz = roznica_procentowa(elem_[0],elem_[j]);
                         }
                         else
                         {
-                            wart_arr.push(roznica_procentowa(elem_[j],elem_[0]));
-                        }                        
+                            roz = roznica_procentowa(elem_[j],elem_[0]);
+                        }  
+                        if(roz>=a)
+                        {
+                            wart_arr.push(roz);
+                        }
+                        else
+                        {
+                            wart_arr.push(1024);
+                        }
                     //    alert("różnica procentowa  > "+elem_[0]+" - "+elem_[j]+" < = "+wart);
                     }
+                    
+                    var w     = Math.min.apply(null, wart_arr);
+                    var w_idx = wart_arr.indexOf(w);
+                //    alert(wart_arr+"\n"+w+"  "+w_idx);
+                    /*
+                    for(var a_=a; a>0; a--)
+                    {
+                        if(w!=1024)
+                        {
+                         //   alert(w+" "+w_idx);
+                            document.getElementById('dost'+(w_idx+1)+'_'+i).style.backgroundColor = kolor1;
+                            break;
+                        }
+                        else
+                        {
+                            wart_arr = oblicz_roznice(elem_,a-1);
+                            w        = Math.min.apply(null, wart_arr);
+                            w_idx    = wart_arr.indexOf(w);
+                        }
+                    }*/
+                
+                    var log = true;
+                    while(log)
+                    {
+                        if(w!=1024)
+                        {
+                            alert(w+" "+w_idx);
+                            document.getElementById('dost'+(w_idx+1)+'_'+i).style.backgroundColor = kolor1;
+                            break;
+                        }
+                        else
+                        {
+                            a=a-1;
+                            wart_arr = oblicz_roznice(elem_,a);
+                            w        = Math.min.apply(null, wart_arr);
+                            w_idx    = wart_arr.indexOf(w);
+                            alert(a+" \n tabela "+wart_arr+" \nwartosc = "+w+" indddex = "+w_idx);
+                        }
+                    }
+                  /**/
+                    
+                    
+                    /*                    
                     var max_war_ar = Math.max.apply(null, wart_arr);
                 //    alert(wart_arr.length);
                     for(var k=0;k<wart_arr.length;k++)
                     {
                       //  alert(wart_arr[k] + " - " + k);
-                        if(wart_arr[k]>a & wart_arr[k]==max_war_ar)
+                        if(wart_arr[k]>a)// & wart_arr[k]==max_war_ar)
                         {
                             for(var j=0;j<k;j++)
                             {
@@ -249,8 +308,7 @@
                             }                             
                             document.getElementById('dost'+(k+1)+'_'+i).style.backgroundColor = kolor1;
                         }
-                    }
-                    
+                    }       */    
                     /*
                         if(wart>a)
                         {
@@ -281,8 +339,7 @@
                               //  document.getElementById('dost'+j+'_'+i).style.backgroundColor = kolor2;
                             }
                       //  }                        
-                    }*/
-                    
+                    }*/                    
                     /*
                 //    alert(e0);
                     for(var y=1;y<elem_.length;y++)
@@ -295,17 +352,86 @@
                     }
                     
                     var wart = Math.min.apply(null, e_);
-                    wart = e_.indexOf(wart);
-                     
+                    wart = e_.indexOf(wart);                     
                   //  alert("różnica procentowa = "+e0+"  "+elem_[1]+"="+e1+"  --  "+elem_[2]+"="+e2);
                     document.getElementById('dost'+(wart+1)+'_'+i).style.backgroundColor = kolor1;
      */
                 }
             }
-        }     
+        } 
         
-        function wczytaj(elem){              
-            var numer = document.getElementById("pn_panel_btn").childElementCount-1;   
+        function oblicz_roznice(elem_,a){
+            var wart_arr = [];
+            for(var j=1;j<elem_.length;j++)
+            {
+                var roz = 0;
+                if(elem_[0]>elem_[j])
+                {
+                    roz = roznica_procentowa(elem_[0],elem_[j]);
+                }
+                else
+                {
+                    roz = roznica_procentowa(elem_[j],elem_[0]);
+                }  
+                if(roz>=a)
+                {
+                    wart_arr.push(roz);
+                }
+                else
+                {
+                    wart_arr.push(1024);
+                }
+                    //    alert("różnica procentowa  > "+elem_[0]+" - "+elem_[j]+" < = "+wart);
+                }
+            return wart_arr;
+        }
+        
+        function wyczysc_z_kolorow(){
+            var row = parseInt(document.getElementById('tab_produkty').rows.length);
+            var col = parseInt(document.getElementById('tab_produkty').rows[0].cells.length)-2;
+            for(var i=0;i<row;i++){ 
+                for(var j=0;j<col;j++){ 
+                    if(document.getElementById('dost'+j+'_'+i)!=null)
+                    {
+                        document.getElementById('dost'+j+'_'+i).style.backgroundColor = kolor2;//alert(""+j+"  "+i);
+                    }                    
+                }  
+            }       
+        }
+        
+        function wczytaj(elem,liczba){      
+            wyczysc_z_kolorow();
+            var numer = document.getElementById("pn_panel_btn").childElementCount-1; 
+            if(numer>liczba)
+            {
+                //alert("> "+liczba+" <");
+                
+                var reader = new FileReader();
+                var spr_1="";
+                reader.onload = function (evt) {                    
+                    if (evt.target.readyState == FileReader.DONE) {
+                        var s = evt.target.result;
+                        spr_1 = s.split("\n");                   
+                        var arr = [];
+                        for(var i=0;i<spr_1.length;i++)
+                        {  
+                         //   alert(numer+"   "+liczba+"  "+elem);
+                          //  arr.push(spr_1[i]);
+                          //  alert(arr[i]+"");
+                          //  alert(liczba+" "+i+" "+spr_1[i]+"    "+spr_1[i].split("|")[2]);
+                          //  alert(document.getElementById('dost'+liczba+'_'+i).);
+                            
+                        
+                            document.getElementById('dost'+liczba+'_'+i).innerHTML = ""+spr_1[i].split("|")[2];
+                            
+                          //  document.getElementById('dost'+liczba+'_'+i).value = spr_1[i].split("|")[2];
+                        }
+                    }
+                };
+                reader.readAsText(elem.files[0]);
+            }
+            else
+            {
          //   alert(numer);
           /*  if(elem.name[7]==numer)
             {                
@@ -355,10 +481,10 @@
                         node.appendChild(tit);
                         var upl = document.createElement("INPUT");       
                         upl.type = "file";
-                        upl.name = "upload_"+(numer-1);
+                        upl.name = "upload_"+(numer-1);//alert(numer-1);
                         upl.addEventListener(
                             'change',
-                            function() { wczytaj(this); },
+                            function() { wczytaj(this,numer-1); },
                             false
                          );
                         upl.setAttribute("class", "upload");
@@ -395,10 +521,10 @@
                     }
                 };
                 reader.readAsText(elem.files[0]);//uploader.files[0]);
-          //  }
-        }        
+            }
+        }
         
-        function roznica_procentowa(a, b){            
+        function roznica_procentowa(a, b){
           //  var wynik = ((100-procent)*wart)/(100);
             var wynik = (((a*100)/b)-100);
             return wynik;

@@ -172,17 +172,16 @@
                         {
                         //    alert(document.getElementById('dost'+j+'_'+i).innerHTML);
                             
-                            if(j!=0)
-                            {//alert(j+" "+i);
+                         //   if(j!=0)
+                         //   {//alert(j+" "+i);
                                 elem_.push(parseFloat(document.getElementById('dost'+j+'_'+i).innerHTML));
-                            }
+                         //   }
                         }
                         else
                         {
                             break;
                          //   alert();
-                        }                        
-                        
+                        }
                      //   alert(elem_[j]);
                     }
                   //  alert(elem_.length);
@@ -204,7 +203,7 @@
                 //    document.getElementById('dost2_'+i).style.backgroundColor = kolor2;  
                     if(elem_.length>=1)
                     {
-                        document.getElementById('dost'+(wart+1)+'_'+i).style.backgroundColor = kolor1;
+                        document.getElementById('dost'+(wart)+'_'+i).style.backgroundColor = kolor1;
                     }                    
                  //   alert(document.getElementById('dost'+wart+'_'+i).value);
                 }

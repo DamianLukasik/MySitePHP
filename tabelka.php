@@ -117,7 +117,7 @@
                     
                     $str = "<tr>"
                             . "<td >".$tab[0]."</td>"
-                            . "<td >".$tab[1]."</td>";                    
+                            . "<td id='dost_nazwa_".$i."'>".$tab[1]."</td>";                    
                     
                     $leng = count($tab);
                     for($o=2; $o < $leng; $o++)
@@ -437,11 +437,11 @@
                 reader.onload = function (evt) {
                     if (evt.target.readyState == FileReader.DONE) {
                         var s = evt.target.result;
-                        spr_1 = s.split("\n");                   
+                        spr_1 = s.split("\n");                 
                         var arr = [];
 
                         for(var i=0;i<spr_1.length;i++)
-                        {  
+                        {
                             arr.push(spr_1[i]);
                       /*      spr_2 = spr_1[i].split(";");
                             var pos = reg.test(spr_2[0]);                                               
@@ -450,7 +450,7 @@
                                 str += spr_1[i]+"\n"; 
                                 arr
                             }*/
-                        }  
+                        }
                     //    alert(str);
                         var div_btn = document.getElementById("pn_panel_btn");
                         var numer = div_btn.childElementCount+1;
@@ -491,9 +491,67 @@
                         var spr_2 = [];
                         var tblBodyObj = tab_produkty.tBodies[0];
                         for (var i=0; i<rows; i++) {
+                                /*
+                                for(var r=0; r<arr.length ;r++)
+                                {   
+                                    var str_arr1 = document.getElementById('dost_nazwa_'+i).innerHTML.toString();      
+                                    var str_arr0 = arr[r].split(";").indexOf(str_arr1);
+                                    
+                                   // var str_arr1 = tblBodyObj.rows[i].cells[r];
+                                    alert(str_arr0+" "+str_arr0.length);
+                                    var log=false;
+                                    if(str_arr0.length === str_arr1.length)
+                                    {
+                                        log=true;
+                                        for(var t=0;t<str_arr0.length;t++)
+                                        {
+                                            if(str_arr0[t]!==str_arr0[t])
+                                            {
+                                                log=false;
+                                            }
+                                            alert(str_arr0[t]+"  "+log+" "+str_arr1[t]);
+                                        }
+                                    }
+                                   
+                                 //   alert(str_arr0+"\t"+str_arr0.length+"\n"+str_arr1+"\t"+str_arr1.length);
+                                    if(str_arr0===str_arr1)
+                                    {                                        
+                                         alert();
+                                    } */
+                               /*     var str_arr0 = arr[r].split(";");
+                                    
+                                    if(str_arr0.)
+                                    {
+                                       
+                                    }
+                                    
+                                    alert(str_arr0+"    "+str_arr1+"  "+if(str_arr0==str_arr1));
+                                    if(str_arr0==str_arr1)
+                                    {
+                                        alert();
+                                        
+                                    }*/
+                                   
+                                    
+                                  /*  if(arr[r].split(";")[2]==tblBodyObj.rows[i].cells[1])
+                                    {
+                                        alert("ok");
+                                    }
+                                }*/
+                                
+                                
+                                
+                             /*   if(arr.indexOf(tblBodyObj.rows[i].cells[]))
+                                {
+                                    
+                                    
+                                }     */                           
+                                
                                 var newCell = tblBodyObj.rows[i].insertCell(numer);
                               //  alert(arr[i]);
                                 spr_2 = arr[i].split(";");
+                                
+                                
                                 newCell.id="dost"+(numer-2)+"_"+i;
                                 newCell.innerHTML = ""+spr_2[1];
                         }

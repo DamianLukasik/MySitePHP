@@ -167,7 +167,7 @@
                                              //   alert(str_tab[i]);
                                                 str += str_tab[i]+"\n";
                                             }
-                                            alert(str);
+                                         //   alert(str);
                                          
                                             j++;
                                         }

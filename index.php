@@ -126,19 +126,27 @@
                                             for(var i=0;i<spr_1.length;i++)
                                             {
                                              //   alert(spr[i]);
-                                                spr_2 = spr_1[i].split("|");
+                                                spr_2 = spr_1[i].split(";");
                                                 var pos = reg.test(spr_2[0]);                                               
                                                 if(spr_2[0].length <= 14 && !pos && spr_2[1].length <= 44)
                                                 {
                                                  //   alert(spr_2[0].length + " " + spr_2[1]);
-                                                    var g = spr_1[i].split("|")[1]+"";
+                                                    var tmp_0 = spr_1[i].split(";")[0]+"";
+                                                    var tmp_1 = spr_1[i].split(";")[1]+"";
+                                                    var tmp_2 = spr_1[i].split(";")[2]+"";
+                                                    
+                                                    spr_1[i] = tmp_0+";"+tmp_2+";"+tmp_1+"";
+                                                 
+                                                    var g = spr_1[i].split(";")[1]+"";
+                                                    
+                                                    
                                                 //    alert(g);
                                                   //  if(str.indexOf(g)!=-1)
                                                 //    alert(str_tab+"\n"+str_tab_produkt);
                                                     if(str_tab_produkt.indexOf(g)!=-1)
                                                     {
                                                 //        alert("> "+g+" < - "+i+"  "+str_tab[i]);
-                                                        str_tab[i] += "|"+ spr_1[i].split("|")[2];
+                                                        str_tab[i] += ";"+ spr_1[i].split(";")[2];
                                                     }
                                                     else
                                                     {
@@ -159,7 +167,7 @@
                                              //   alert(str_tab[i]);
                                                 str += str_tab[i]+"\n";
                                             }
-                                       //     alert(str);
+                                            alert(str);
                                          
                                             j++;
                                         }

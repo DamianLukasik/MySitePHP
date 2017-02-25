@@ -33,7 +33,7 @@
                 for($i = 0; $i < $count-1; $i++)
                 { 
                     $str = $czesci[$i];
-                    $tab = explode("|",$str);
+                    $tab = explode(";",$str);
                     $leng = count($tab) - 3;
                     array_push($leng_arr,$leng);
               //      echo $leng;
@@ -76,7 +76,7 @@
                 for($i = 0; $i < $count-1; $i++)
                 {  
                     $str = $czesci[$i];
-                    $tab = explode("|",$str); 
+                    $tab = explode(";",$str); 
                     $leng = count($tab);
                     $max = 0;
                     for($o=2; $o < $leng; $o++)
@@ -107,7 +107,7 @@
                 for($i = 0; $i < $count-1; $i++)
                 {                    
                     $str = $czesci[$i];
-                    $tab = explode("|",$str); 
+                    $tab = explode(";",$str); 
                     
                     $dost0 = $tab[2];
                  //   $dost1 = $tab[3];//*$roznica_procentowa;
@@ -123,7 +123,9 @@
                     for($o=2; $o < $leng; $o++)
                     {
                      //   echo "<td>".($o-2)."</td>";
-                        $str = $str."<td style='backgroundColor: #FFFFFF;' id='dost".($o-2)."_".$i."'>".$tab[$o]."</td>";
+                     //   $tab[$o].s
+                        
+                        $str = $str."<td style='backgroundColor: #FFFFFF;' id='dost".($o-2)."_".$i."'>".$tab[$o]."</td>";                        
                     }
                 //    echo "</tr>"
                   //  $str = $str.""
@@ -402,13 +404,13 @@
                          //   alert(numer+"   "+liczba+"  "+elem);
                           //  arr.push(spr_1[i]);
                           //  alert(arr[i]+"");
-                          //  alert(liczba+" "+i+" "+spr_1[i]+"    "+spr_1[i].split("|")[2]);
+                          //  alert(liczba+" "+i+" "+spr_1[i]+"    "+spr_1[i].split(";")[2]);
                           //  alert(document.getElementById('dost'+liczba+'_'+i).);
                             
                         
-                            document.getElementById('dost'+liczba+'_'+i).innerHTML = ""+spr_1[i].split("|")[2];
+                            document.getElementById('dost'+liczba+'_'+i).innerHTML = ""+spr_1[i].split(";")[1];
                             
-                          //  document.getElementById('dost'+liczba+'_'+i).value = spr_1[i].split("|")[2];
+                          //  document.getElementById('dost'+liczba+'_'+i).value = spr_1[i].split(";")[1];
                         }
                     }
                 };
@@ -442,7 +444,7 @@
                         for(var i=0;i<spr_1.length;i++)
                         {  
                             arr.push(spr_1[i]);
-                      /*      spr_2 = spr_1[i].split("|");
+                      /*      spr_2 = spr_1[i].split(";");
                             var pos = reg.test(spr_2[0]);                                               
                             if(spr_2[0].length <= 14 && !pos && spr_2[1].length <= 44)
                             {
@@ -492,9 +494,9 @@
                         for (var i=0; i<rows; i++) {
                                 var newCell = tblBodyObj.rows[i].insertCell(numer);
                               //  alert(arr[i]);
-                                spr_2 = arr[i].split("|");
+                                spr_2 = arr[i].split(";");
                                 newCell.id="dost"+(numer-2)+"_"+i;
-                                newCell.innerHTML = ""+spr_2[2];
+                                newCell.innerHTML = ""+spr_2[1];
                         }
 
                        /*

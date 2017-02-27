@@ -203,10 +203,10 @@
     
                     var wart = Math.min.apply(null, elem_);
                     wart = elem_.indexOf(wart);
-                    if(i==9)
-                    {
+                 //   if(i==9)
+                 //   {
                     //    alert(wart+" - "+i+" - "+elem_+"  ");
-                    }
+                //    }
                     for(var j = 0;j<elem_.length;j++ )
                     {
                      //   elem_.push(parseFloat(document.getElementById('dost'+j+'_'+i).innerHTML));
@@ -231,7 +231,8 @@
                     var e_;
                     for(var j = 0;j<col;j++ )//po wszystkich komórkach
                     {            
-                        if(document.getElementById('dost'+j+'_'+i)!=null)
+                        if(document.getElementById('dost'+j+'_'+i)!=null && 
+                                parseInt(document.getElementById('dost'+j+'_'+i).innerHTML)!=0)
                         {
                             elem_.push(parseFloat(document.getElementById('dost'+j+'_'+i).innerHTML));
                             document.getElementById('dost'+j+'_'+i).style.backgroundColor = kolor2;                             

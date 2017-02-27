@@ -163,24 +163,31 @@
             {//wyszukuje najmniejszą
                 for(var i=0;i<row;i++)
                 {
-                   // alert(row);
+                //    alert(row);
                     var elem_ = [];
                     for(var j = 0;j<col;j++ )
                     {
-                      //  alert(j+" "+col+"  ");
+                     //   if(i==9)
+                    //    alert(j+" "+col+"  ");
                         if(document.getElementById('dost'+j+'_'+i)!=null)
                         {
-                        //    alert(document.getElementById('dost'+j+'_'+i).innerHTML);
+                        //    if(i==9)
+                         //   alert(document.getElementById('dost'+j+'_'+i).innerHTML+"\n"+j+"\t"+i+"\n"+col);
+                            
+                        //    if(i==9)
+                       //     alert("dost"+j+"_"+i+"\n"+document.getElementById('dost'+j+'_'+i).innerHTML);
                             
                          //   if(document.getElementById('dost'+j+'_'+i).innerHTML=="brak")
                           //  {
                         //    alert(document.getElementById('dost'+j+'_'+i).innerHTML);
                         //    }
+                         //   if(i==9)
+                         //   alert(parseInt(document.getElementById('dost'+j+'_'+i).innerHTML)+1);
                             
-                         //   if(j!=0)
-                         //   {//alert(j+" "+i);
+                            if(parseInt(document.getElementById('dost'+j+'_'+i).innerHTML)!=0)
+                            {//alert(j+" "+i);
                                 elem_.push(parseFloat(document.getElementById('dost'+j+'_'+i).innerHTML));
-                         //   }
+                            }
                         }                        
                         else
                         {
@@ -196,7 +203,10 @@
     
                     var wart = Math.min.apply(null, elem_);
                     wart = elem_.indexOf(wart);
-                 //   alert(wart+" "+i+" "+elem_+"  ");
+                    if(i==9)
+                    {
+                    //    alert(wart+" - "+i+" - "+elem_+"  ");
+                    }
                     for(var j = 0;j<elem_.length;j++ )
                     {
                      //   elem_.push(parseFloat(document.getElementById('dost'+j+'_'+i).innerHTML));
@@ -349,7 +359,7 @@
      */
                 }
             }
-        } 
+        }
         
         function oblicz_roznice(elem_,a){
             var wart_arr = [];
@@ -389,22 +399,22 @@
             }       
         }
         
-        function wczytaj(elem,liczba){      
+        function wczytaj(elem,liczba){
             wyczysc_z_kolorow();
             var numer = document.getElementById("pn_panel_btn").childElementCount-1; 
             if(numer>liczba)
             {
                 //alert("> "+liczba+" <");
-                
+                //zamienia miejscami dane z wybranej kolumny
                 var reader = new FileReader();
                 var spr_1="";
-                reader.onload = function (evt) {                    
+                reader.onload = function (evt) {
                     if (evt.target.readyState == FileReader.DONE) {
                         var s = evt.target.result;
                         spr_1 = s.split("\n");                   
                         var arr = [];
                         for(var i=0;i<spr_1.length;i++)
-                        {  
+                        {
                          //   alert(numer+"   "+liczba+"  "+elem);
                           //  arr.push(spr_1[i]);
                           //  alert(arr[i]+"");
@@ -438,7 +448,7 @@
             //   var uploader = document.getElementsByName(elem.name);
              //  uploader.files[i];            
                 var reader = new FileReader();
-                var spr_1="";
+                var spr_1="";//wczytuje nowe dane
                 reader.onload = function (evt) {
                     if (evt.target.readyState == FileReader.DONE) {
                         var s = evt.target.result;
@@ -495,7 +505,7 @@
                     // alert(numer-2);
                         var spr_2 = [];
                         var tblBodyObj = tab_produkty.tBodies[0];
-                        var log_3 = false;
+                        var log_3 = 0;
                         var newRow;
                         for (var r=0; r<arr[r].length; r++) {
                         //    alert(tblBodyObj.rows.length+"  "+arr.length);
@@ -544,11 +554,13 @@
                                 for(var q=2;q<=liczba+2;q++)
                                 {
                                 //    alert(q+"  "+liczba+"  "+spr_2[1]);
-                                    newCell_2 = newRow.insertCell(q);                                
-                                    newCell_2.innerHTML = "brak";                      
+                                    newCell_2 = newRow.insertCell(q);
+                                    newCell_2.innerHTML = "0.00";
+                               //     alert("dost"+(numer-3)+"_"+i);
                                 }
-                                newCell_2.innerHTML = spr_2[1];
-                                
+                                newCell_2.innerHTML = spr_2[1];   
+                            //    alert("dost"+(numer-3)+"_"+i);
+                                newCell_2.id="dost"+(numer-3)+"_"+i;
                                 /*
                                 var cell1
                                 var cell2 = row.insertCell(1);
@@ -562,21 +574,42 @@
                                 newCell.id="dost"+(numer-2)+"_"+i;
                                 newCell.innerHTML = ""+spr_2[1]; */
                             }
-                            if(tblBodyObj.rows.length>arr.length)
+                            if(r==parseInt(arr.length-1))
                             {
-                            //    alert(tblBodyObj.rows.length+"  "+arr.length);    
-                                log_3 = true;
+                             //   alert("za "+tblBodyObj.rows.length+"  "+arr.length+"  = \n"
+                             //               +r+"\t"+parseInt(arr.length-1));
+                                if(tblBodyObj.rows.length>arr.length)
+                                {                                    
+                                    log_3 = 1;
+                                    break;
+                                }
+                                else
+                                {
+                                 //   alert("po "+tblBodyObj.rows.length+"  "+arr.length);
+                                    log_3 = 2;
+                                    break;
+                                }
                             }
+                            //alert(log_3);
                         }
-                        alert(log_3);
-                        if(log_3)
+                        if(log_3===1)
                         {
-                            
-                            var newCell_n = newRow.insertCell(liczba);    
-                            newCell_n.innerHTML = "brak";
-                            newCell_n.id="dost_numer_"+tblBodyObj.rows.length;
+                        //    alert(log_3+" < "+liczba+"\t"+arr.length+"\t"+tblBodyObj.rows.length);
+                        //    alert(tblBodyObj.rows[arr.length].cells[1]);
+                            newRow = tblBodyObj.rows[i+1];
+                      //      alert(liczba); 
+                            var newCell_n = newRow.insertCell(liczba+2);   
+                            newCell_n.innerHTML = "0.00";
+                        //    alert("dost"+(numer-3)+"_"+(i+1));
+                            newCell_n.id="dost"+(numer-3)+"_"+(1+i);//"dost_numer_"+tblBodyObj.rows.length;//"dost"+(numer-3)+"_"+i;
                         }
-                        
+                        if(log_3===2)
+                        {
+                      /*      alert(log_3+" > "+(numer-3)+" "+i);
+                            var newCell_n = newRow.insertCell(0);    
+                            newCell_n.innerHTML = "brak";
+                            newCell_n.id="dost"+(numer-3)+"_"+i;*/
+                        }
 
                        /*
                 ."<input onchange='wczytaj(this);'       
@@ -595,7 +628,7 @@
             return wynik;
         }
         
-        function netto2brutto(a){   
+        function netto2brutto(a){
             var x = a*0.23;
             a = x + a;
             return a;

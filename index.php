@@ -65,7 +65,7 @@
                         var str = "q=";
                         var str_tab = [];
                         var str_tab_produkt = [];
-                        var reg = new RegExp("[A-Z]|[a-z]+");
+                        var reg = new RegExp("[A-Z]|[a-z]+");                       
                                               
                       //  alert(this.files[1].name+"   "+this.files.length);
                      /*   for(var x=0;x<this.files.length;x++){
@@ -139,17 +139,34 @@
                                                  
                                                     var g = spr_1[i].split(";")[1]+"";
                                                     
-                                                    
+                                                /*    alert(str_tab_produkt.indexOf(g)+"\n"+
+                                                            str_tab[i]+"\n"+
+                                                            spr_1[i].split(";")[2]);*/
                                                 //    alert(g);
                                                   //  if(str.indexOf(g)!=-1)
                                                 //    alert(str_tab+"\n"+str_tab_produkt);
                                                     if(str_tab_produkt.indexOf(g)!=-1)
                                                     {
                                                 //        alert("> "+g+" < - "+i+"  "+str_tab[i]);
-                                                        str_tab[i] += ";"+ spr_1[i].split(";")[2];
+                                                      //  alert(i);
+                                                                                                                
+                                                   /*     for(var y=0; y<str_tab.length; y++)
+                                                        {                                                            
+                                                            if(parseInt(str_tab[y].split(";")[0])
+                                                                    ==
+                                                                    parseInt(spr_1[i].split(";")[0]))
+                                                            {
+                                                                alert(parseInt(str_tab[y].split(";")[0])
+                                                                    +"\n\n"+
+                                                                    parseInt(spr_1[i].split(";")[0]));*/
+                                                                str_tab[i] += ";"+ spr_1[i].split(";")[2];  
+                                                           //     alert(str_tab[i]);
+                                                     //       }                                               
+                                                    //    } 
+                                                                                                                
                                                     }
                                                     else
-                                                    {
+                                                    {                                                       
                                                         str_tab.push(spr_1[i]);
                                                         str_tab_produkt.push(g);
                                                     }
@@ -167,12 +184,12 @@
                                              //   alert(str_tab[i]);
                                                 str += str_tab[i]+"\n";
                                             }
-                                         //   alert(str);
-                                         
-                                            j++;
+                                       //     alert(str);                                         
+                                            j++;                                            
                                         }
                                     };
-                                    reader.readAsText(this.files[i]);                                    
+                                    reader.readAsText(this.files[i]);  
+                                    
                                 }
                                 /*
                                 var j = 0, k = files.length;

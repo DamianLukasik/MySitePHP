@@ -27,7 +27,7 @@
             ."<input onchange='wczytaj(this,0);' type='file' name='upload_0' class='upload'>"
             ."</div>";
             $leng_arr = array();
-            if(isset($_POST['q'])){       
+            if(isset($_POST['q'])){
                 $czesci = explode("\n", $_POST['q']); 
                 $count = count($czesci);
                 for($i = 0; $i < $count-1; $i++)
@@ -45,7 +45,7 @@
                 echo "<div class='browse-wrap' style='width: 250px;'>"
                 ."<input class='title' value='Zaczytaj ofertę dostawcy nr ".($i+1)."' style='margin: 0px;text-align: left;width: 250px;'/>"
                 ."<input onchange='wczytaj(this,".($i+1).");' type='file' name='upload_1' class='upload'>"
-                ."</div>";                 
+                ."</div>";
             }
             
                           

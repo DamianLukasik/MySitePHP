@@ -57,251 +57,91 @@
                 for( item in uploader ) {
                     // Detect changes
                     uploader[item].onchange = function() {
-                        var fileDisplayArea = document.getElementById('fileDisplayArea');
-                        var textType = /text.*/;
-                        var file = [];
-                        var _s; 
-                        var s_;
-                        var str = "q=";
-                        var str_tab = [];
-                        var str_tab_produkt = [];
-                        var reg = new RegExp("[A-Z]|[a-z]+");                       
-                                              
-                      //  alert(this.files[1].name+"   "+this.files.length);
-                     /*   for(var x=0;x<this.files.length;x++){
-                           // alert(this.files[x].name+"  "+x);
-                           // setTimeout(g, 1000);
-                       //     span[0].innerHTML = this.files[x].name;  
-                          //  alert();    
-                            file.push(this.files[x]); 
-                        }*/
-                        
-                          //  if(file[x].type.match(textType))
-                         //   {
-                             //   var reader = new FileReader();  
-                              //  alert(file[x]);
-                              //  setTimeout(g, 1000);
-                            /*    reader.onload = function(e) {
-                                //  alert(reader.result);
-                                    var s  = reader.result.split("\n"); 
-                                    _s = "";  
-                                    for(var u=0; u<s.length; u++)
-                                    { 
-                                    //    alert(s[u]);
-                                        var a = s[u];                               
-                                        for (n = 1; n < a.length; ++n)
+                        var fileDisplayArea = document.getElementById('txtArea_DoWysłania');
+                        var j = 0, k = this.files.length;
+                        if(k > 5)
+                        {
+                            alert("zbyt dużo plików do odczytania");
+                        }
+                        else
+                        {
+                            var wiersze = [];
+                            for (var i = 0; i < k; i++) {
+                                var reader = new FileReader();
+                                reader.onload = function (evt) {
+                                    if (evt.target.readyState == FileReader.DONE) {   
+                                        
+                                        var zawartosc_pliku = evt.target.result;
+                                       // fileDisplayArea.innerHTML = zawartosc_pliku
+                                        var tabela_zawart_pliku = zawartosc_pliku.split("\n");
+                                        
+                                        for(var tzp_i=0;tzp_i<tabela_zawart_pliku.length;tzp_i++)
                                         {
-                                         //   alert(a[n]);
-                                            _s += a[n];
-                                        }   
-                                        _s +="\n";
-                                    }     
-                                //    str += reader.result+"\n";  
-                                    str += _s;                      
-                                //    alert(str);
-                                };*/
-                           //     reader.readAsText(file);  
-                                
-                                var j = 0, k = this.files.length;
-                                if(k <= 5){
-                                
-                                for (var i = 0; i < k; i++) {
-                                    var reader = new FileReader();
-                                    var spr_1="";
-                                 //   alert();
-                                     reader.onload = function (evt) {
-                                        if (evt.target.readyState == FileReader.DONE) {                                            
-                                         //   alert(evt.target.result+"");                                            
-                                            // data["File_Content" + j] = evt.target.result;                                           
-                                            //zrobić walidacje danych
-                                           
-                                            var s = evt.target.result;
-                                           
-                                            spr_1 = s.split("\n");
-                                            var spr_2 = "";
-                                            var wyniki = [];
-                                           
-                                         //   alert(spr_1);
-                                            
-                                            for(var i=0; i<spr_1.length; i++)
+                                            var wiersze_tab_zawart_pliku = tabela_zawart_pliku[tzp_i].split(";");                                            
+                                            for(var wtzp_i=0;wtzp_i<wiersze_tab_zawart_pliku.length;wtzp_i++)
                                             {
-                                                var str_2 = spr_1[i].split(";");
-                                                
-                                                var tmp_ = str_2[1];
-                                                str_2[1] = str_2[2];
-                                                str_2[2] = tmp_;
-                                                
-                                                wyniki.push(str_2);
-                                                
-                                            //    alert(wyniki[i]);                                                
-                                            }                                            
-                                           // alert(wyniki);                                           
-                                            if(str!="q=")
-                                            {
-                                                var str_tmp = str.substring(2).split("\n");
-                                                alert(str_tmp+"\n\n---\n\n"+str);
-                                                for(var i=0; i<wyniki.length; i++)
+                                                //alert(wiersze+"\n\n"+zawart_pola_tekstowego);
+                                                   
+                                                var zamiana = wiersze_tab_zawart_pliku[1];
+                                                wiersze_tab_zawart_pliku[1] = wiersze_tab_zawart_pliku[2];
+                                                wiersze_tab_zawart_pliku[2] = zamiana;
+                                                alert(">  "+wiersze_tab_zawart_pliku);
+                                                                                                       
+                                                for(var id_wiersze=0;id_wiersze<wiersze.length;id_wiersze++)
+                                                {                                                     
+                                                    var okreslony_wiersz = wiersze[id_wiersze];   
+                                                    
+                                                }
+                                                fileDisplayArea.innerHTML += wiersze_tab_zawart_pliku[wtzp_i];                                                
+                                                if(wtzp_i<wiersze_tab_zawart_pliku.length-1)
                                                 {
-                                                    var tmp_1 = wyniki[i];
-                                                    for(var t=0; t<str_tmp.length; t++)
+                                                //    wiersze.push(";");
+                                                    fileDisplayArea.innerHTML += ";";
+                                                }
+                                            }
+                                            for(var id_wiersze=0;id_wiersze<wiersze.length;id_wiersze++)
+                                            {
+                                                var tmp = wiersze[id_wiersze].split(";");
+                                                //alert(id_wiersze+"-"+wiersze.length+"\n"+">\t"+wiersze[id_wiersze]+"\t<");
+                                                for(var id_wiersze_=0;id_wiersze_<wiersze.length;id_wiersze_++)
+                                                {
+                                                    // alert(id_wiersze+"-"+wiersze.length+"\n"+">\t"+wiersze[id_wiersze]+"\t<");
+                                                    var tmp_ = wiersze[id_wiersze_].split(";");
+                                                    if(tmp_[2]==tmp[2])
                                                     {
-                                                    //    alert(str_tmp.length+"\n\n"+wyniki.length);
-                                                        var tmp_2 = str_tmp[t].split(",");
-                                                        if(tmp_1[0]==tmp_2[0])
+                                                        if(tmp_[1]!=tmp[1])
                                                         {
-                                                            var tmp_tab = [];
+                                                            alert(tmp_+"\n\n=_=_=\n\n"+tmp);
                                                             
-                                                            for(var y=0; y<str_tmp.length; y++)
-                                                            {
-                                                                if(tmp_2[y]!=null)
-                                                                {
-                                                                  //  if(i==0)
-                                                                  //  alert(tmp_2[y]+"\n"+tmp_2);
-                                                                    tmp_tab.push(tmp_2[y]);
-                                                                }
-                                                            }
-                                                        //    alert(tmp_1+"\n\n"+tmp_2);
-                                                            tmp_tab.push(tmp_1[2]);
-                                                        //    alert(str+"\n\n====\n\n"+wyniki+"\n\n"+tmp_tab);
-                                                            wyniki[i] = tmp_tab;
+                                                          //  wiersze[id_wiersze] = 
                                                             
-                                                           // if(i==0)
-                                                          //  alert(tmp_tab+"\n\n====\n\n"+wyniki[i]+"\n\n====\n\n"+str_tmp[y]);
+                                                            alert(wiersze[id_wiersze]);
+                                                                
+                                                        //    tmp[1];                                                            
+                                                        //    wiersze[id_wiersze] = 
                                                         }
                                                     }
                                                 }
                                             }
-                                            str="q=";
-                                            for(var i=0; i<wyniki.length; i++)
-                                            {
-                                                str += wyniki[i]+"\n";
-                                            }
-                                          //  alert(str);
-                                            
-                                           /*
-                                            for(var i=0;i<spr_1.length;i++)
-                                            {
-                                                spr_2 = spr_1[i].split(";");
-                                                var pos = reg.test(spr_2[0]);
-                                                if(spr_2[2].indexOf(".")!=-1)
-                                                {
-                                                 //   alert();
-                                                    var tmp_ = spr_2[1];
-                                                    spr_2[1] = spr_2[2];
-                                                    spr_2[2] = tmp_;
-                                                }
-                                                //alert(spr_2);
-                                                if(spr_2[0].length <= 14 && !pos && spr_2[2].length <= 44)//numer owoc - numer cena
-                                                {
-                                                //    alert(spr_2[0].length + " " + spr_2[1]);
-                                                    var tmp_0 = spr_1[i].split(";")[0]+"";
-                                                    var tmp_1 = spr_1[i].split(";")[1]+"";
-                                                    var tmp_2 = spr_1[i].split(";")[2]+"";
-                                                    //alert(tmp_1+" \n "+tmp_2);
-                                                    spr_1[i] = tmp_0+";"+tmp_2+";"+tmp_1+"";
-                                                // alert(spr_1[i]);
-                                                    var g = spr_1[i].split(";")[1]+"";
-                                                    //alert(""+spr_1[i]+"\n"+g+"\n="+str_tab_produkt+"\n\n"+str_tab_produkt.indexOf(g));
-                                                    
-                                                /*    alert(str_tab_produkt.indexOf(g)+"\n"+
-                                                            str_tab[i]+"\n"+
-                                                            spr_1[i].split(";")[2]);/
-                                                //    alert(g);
-                                                  //  if(str.indexOf(g)!=-1)
-                                                //    alert(str_tab+"\n"+str_tab_produkt);
-                                                    if(str_tab_produkt.indexOf(g)!=-1)
-                                                    {
-                                                //        alert("> "+g+" < - "+i+"  "+str_tab[i]);
-                                                      //  alert(i);
-                                                                                                                
-                                                   /*     for(var y=0; y<str_tab.length; y++)
-                                                        {                                                            
-                                                            if(parseInt(str_tab[y].split(";")[0])
-                                                                    ==
-                                                                    parseInt(spr_1[i].split(";")[0]))
-                                                            {
-                                                                alert(parseInt(str_tab[y].split(";")[0])
-                                                                    +"\n\n"+
-                                                                    parseInt(spr_1[i].split(";")[0]));/
-                                                                str_tab[i] += ";"+ spr_1[i].split(";")[2];  
-                                                                alert(str_tab[i]);
-                                                     //       }                                               
-                                                    //    } 
-                                                                                                                
-                                                    }
-                                                    else
-                                                    {                                                       
-                                                        str_tab.push(spr_1[i]);
-                                                        str_tab_produkt.push(g);
-                                                    }
-                                                }
-                                            }*/
-                                       //     alert(str);
-                                           
-                                          //  str += evt.target.result+"\n";
-                                         //   alert(evt.target.result[15]);
-                                                                                  
-                                            //alert(str_tab);
-                                       /*     str = "q=";
-                                            for(var i=0; i<wyniki.length; i++)
-                                            {
-                                             //   alert(str_tab[i]);
-                                                str += wyniki[i]+"\n";
-                                            }
-                                       //     alert(str);                                         
-                                            j++;   */                                         
+                                            wiersze.push(tabela_zawart_pliku[tzp_i]);
+                                         //   alert(wiersze_tab_zawart_pliku[0]+"\t\t"+wiersze[tzp_i]+"\n\n\t\t"+wiersze);
                                         }
-                                    };
-                                    reader.readAsText(this.files[i]);  
-                                    
-                                }
-                                /*
-                                var j = 0, k = files.length;
-                                for (var i = 0; i < k; i++) {
-                                    var reader = new FileReader();
-                                    reader.onloadend = function (evt) {
-                                        if (evt.target.readyState == FileReader.DONE) {
-                                            data["File_Content" + j] = btoa(evt.target.result);
-                                            j++;
-                                            if (j == k){
-                                                alert('All files read');
-                                            }
-                                        }
-                                    };
-                                    reader.readAsBinaryString(files[i]);
-                                }                                
-                                */
-                              //  alert(_s);                                
-                              //  alert(str);   
-                         /*   }
-                            else 
-                            {
-                                fileDisplayArea.innerText = "File not supported!";
-                            }*/
-                           // alert(x);
-                    //    }                        
-                        xmlHTTP = new XMLHttpRequest();                          
-                     //   alert(str);                        
-                        xmlHTTP.open("POST", "tabelka.php", true);
-                        xmlHTTP.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                        xmlHTTP.setRequestHeader("Content-length", str.length);
-                        xmlHTTP.setRequestHeader("Connection", "close");
-                        xmlHTTP.onreadystatechange = function() {
-                            //Call a function when the state changes.
-                            if(xmlHTTP.readyState == 4 && xmlHTTP.status == 200) {
-                                document.write(xmlHTTP.responseText);
+                                        fileDisplayArea.innerHTML += "\n";  
+                                       // wiersze.push("\n");
+                                        //=======
+                                        /*
+                                        var zawartosc = fileDisplayArea.innerHTML;
+                                
+                                        var tabela_zawartosci = zawartosc.split("\n");
+
+                                        for(var idx_tab_zawart;idx_tab_zawart<tabela_zawartosci.length-1;idx_tab_zawart++)
+                                        {
+                                            fileDisplayArea.innerHTML = tabela_zawartosci[idx_tab_zawart];                                    
+                                        }*/
+                                    }
+                                };
+                                reader.readAsText(this.files[i]);                               
                             }
-                        };
-                        function f() {
-                         //   alert(str);
-                            xmlHTTP.send(str);
-                        }
-                        setTimeout(f, 950);
-                      //  xmlHTTP.send(str);
-                        }
-                        else
-                        {
-                            alert("zbyt dużo plików do odczytania");
                         }
                     };
                 }     
@@ -311,6 +151,7 @@
             <input type="file" name="file" value="" width="100" />            
             -->            
         </form>
+        ​<textarea id="txtArea_DoWysłania" rows="30" cols="70"></textarea>
                            
     </body>
 </html>

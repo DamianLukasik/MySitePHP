@@ -110,38 +110,102 @@
                                     var spr_1="";
                                  //   alert();
                                      reader.onload = function (evt) {
-                                        if (evt.target.readyState == FileReader.DONE) {
-                                            
-                                         //   alert(evt.target.result+"");
-                                            
-                                            // data["File_Content" + j] = evt.target.result;
-                                           
+                                        if (evt.target.readyState == FileReader.DONE) {                                            
+                                         //   alert(evt.target.result+"");                                            
+                                            // data["File_Content" + j] = evt.target.result;                                           
                                             //zrobić walidacje danych
                                            
                                             var s = evt.target.result;
                                            
                                             spr_1 = s.split("\n");
                                             var spr_2 = "";
+                                            var wyniki = [];
                                            
+                                         //   alert(spr_1);
+                                            
+                                            for(var i=0; i<spr_1.length; i++)
+                                            {
+                                                var str_2 = spr_1[i].split(";");
+                                                
+                                                var tmp_ = str_2[1];
+                                                str_2[1] = str_2[2];
+                                                str_2[2] = tmp_;
+                                                
+                                                wyniki.push(str_2);
+                                                
+                                            //    alert(wyniki[i]);                                                
+                                            }                                            
+                                           // alert(wyniki);                                           
+                                            if(str!="q=")
+                                            {
+                                                var str_tmp = str.substring(2).split("\n");
+                                                alert(str_tmp+"\n\n---\n\n"+str);
+                                                for(var i=0; i<wyniki.length; i++)
+                                                {
+                                                    var tmp_1 = wyniki[i];
+                                                    for(var t=0; t<str_tmp.length; t++)
+                                                    {
+                                                    //    alert(str_tmp.length+"\n\n"+wyniki.length);
+                                                        var tmp_2 = str_tmp[t].split(",");
+                                                        if(tmp_1[0]==tmp_2[0])
+                                                        {
+                                                            var tmp_tab = [];
+                                                            
+                                                            for(var y=0; y<str_tmp.length; y++)
+                                                            {
+                                                                if(tmp_2[y]!=null)
+                                                                {
+                                                                  //  if(i==0)
+                                                                  //  alert(tmp_2[y]+"\n"+tmp_2);
+                                                                    tmp_tab.push(tmp_2[y]);
+                                                                }
+                                                            }
+                                                        //    alert(tmp_1+"\n\n"+tmp_2);
+                                                            tmp_tab.push(tmp_1[2]);
+                                                        //    alert(str+"\n\n====\n\n"+wyniki+"\n\n"+tmp_tab);
+                                                            wyniki[i] = tmp_tab;
+                                                            
+                                                           // if(i==0)
+                                                          //  alert(tmp_tab+"\n\n====\n\n"+wyniki[i]+"\n\n====\n\n"+str_tmp[y]);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            str="q=";
+                                            for(var i=0; i<wyniki.length; i++)
+                                            {
+                                                str += wyniki[i]+"\n";
+                                            }
+                                          //  alert(str);
+                                            
+                                           /*
                                             for(var i=0;i<spr_1.length;i++)
                                             {
-                                             //   alert(spr[i]);
                                                 spr_2 = spr_1[i].split(";");
-                                                var pos = reg.test(spr_2[0]);                                               
-                                                if(spr_2[0].length <= 14 && !pos && spr_2[1].length <= 44)
+                                                var pos = reg.test(spr_2[0]);
+                                                if(spr_2[2].indexOf(".")!=-1)
                                                 {
-                                                 //   alert(spr_2[0].length + " " + spr_2[1]);
+                                                 //   alert();
+                                                    var tmp_ = spr_2[1];
+                                                    spr_2[1] = spr_2[2];
+                                                    spr_2[2] = tmp_;
+                                                }
+                                                //alert(spr_2);
+                                                if(spr_2[0].length <= 14 && !pos && spr_2[2].length <= 44)//numer owoc - numer cena
+                                                {
+                                                //    alert(spr_2[0].length + " " + spr_2[1]);
                                                     var tmp_0 = spr_1[i].split(";")[0]+"";
                                                     var tmp_1 = spr_1[i].split(";")[1]+"";
                                                     var tmp_2 = spr_1[i].split(";")[2]+"";
-                                                    
+                                                    //alert(tmp_1+" \n "+tmp_2);
                                                     spr_1[i] = tmp_0+";"+tmp_2+";"+tmp_1+"";
-                                                 
+                                                // alert(spr_1[i]);
                                                     var g = spr_1[i].split(";")[1]+"";
+                                                    //alert(""+spr_1[i]+"\n"+g+"\n="+str_tab_produkt+"\n\n"+str_tab_produkt.indexOf(g));
                                                     
                                                 /*    alert(str_tab_produkt.indexOf(g)+"\n"+
                                                             str_tab[i]+"\n"+
-                                                            spr_1[i].split(";")[2]);*/
+                                                            spr_1[i].split(";")[2]);/
                                                 //    alert(g);
                                                   //  if(str.indexOf(g)!=-1)
                                                 //    alert(str_tab+"\n"+str_tab_produkt);
@@ -158,9 +222,9 @@
                                                             {
                                                                 alert(parseInt(str_tab[y].split(";")[0])
                                                                     +"\n\n"+
-                                                                    parseInt(spr_1[i].split(";")[0]));*/
+                                                                    parseInt(spr_1[i].split(";")[0]));/
                                                                 str_tab[i] += ";"+ spr_1[i].split(";")[2];  
-                                                           //     alert(str_tab[i]);
+                                                                alert(str_tab[i]);
                                                      //       }                                               
                                                     //    } 
                                                                                                                 
@@ -171,21 +235,21 @@
                                                         str_tab_produkt.push(g);
                                                     }
                                                 }
-                                            }
+                                            }*/
                                        //     alert(str);
                                            
                                           //  str += evt.target.result+"\n";
                                          //   alert(evt.target.result[15]);
                                                                                   
                                             //alert(str_tab);
-                                            str = "q=";
-                                            for(var i=0; i<str_tab.length; i++)
+                                       /*     str = "q=";
+                                            for(var i=0; i<wyniki.length; i++)
                                             {
                                              //   alert(str_tab[i]);
-                                                str += str_tab[i]+"\n";
+                                                str += wyniki[i]+"\n";
                                             }
                                        //     alert(str);                                         
-                                            j++;                                            
+                                            j++;   */                                         
                                         }
                                     };
                                     reader.readAsText(this.files[i]);  

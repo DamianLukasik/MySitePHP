@@ -222,7 +222,7 @@
                                 }
                             };
                             function f() {
-                                alert(str);
+                           //     alert(str);
                                 xmlHTTP.send(str);
                             }
                             setTimeout(f, 950);

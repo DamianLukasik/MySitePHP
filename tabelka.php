@@ -75,7 +75,7 @@
                 $max = 0;
                 
                 for($i = 0; $i < $count-1; $i++)
-                {  
+                {  	
                     $str = $czesci[$i];
                     $tab = explode(";",$str); 
                     $leng = count($tab);
@@ -95,7 +95,7 @@
                 }
                 echo  "</tr></thead>";
            
-                for($i = 0; $i < $count-2 ;$i++)
+                for($i = 0; $i < $count-1 ;$i++)
                 {
                 //    echo "<tr><td>".$czesci[$i]."</td></tr>";
                     $czesci_w = explode(";",$czesci[$i]); 

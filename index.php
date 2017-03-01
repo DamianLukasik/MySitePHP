@@ -96,13 +96,13 @@
                                                 //    alert(tab);
                                                     var tmp = tab[1];
                                                     
-                                                    var patt = new RegExp("\n");
-                                                    var res = patt.test(tab[2]);
+                                                 //   var patt = new RegExp("\n");
+                                                 //   var res = patt.test(tab[2]);
                                                     
-                                                    if(res)
+                                                    if(p<zawr_konkr_wier_.length-1)
                                                     {
-                                                        tab[1]  = tab[2].substirng(0,tab[2].length-1);
-                                                                alert(tab[1]);
+                                                        tab[1]  = tab[2].substring(0,tab[2].length-1);
+                                                            //    alert(tab[1]);
                                                     }
                                                     else
                                                     {
@@ -110,7 +110,9 @@
                                                     }
                                                     tab[2]  = tmp;                                                    
                                                     fileDisplayArea.innerHTML += tab[0]+";"+tab[1]+";"+tab[2]+"\n";
-                                                    alert(tab[0]+";"+tab[1]+";"+tab[2]+"\n");
+                                                //    alert(tab[0]+";"+tab[1]+";"+tab[2]+"\n");
+												
+												//	alert(tab[1]);
                                                     zawar_pola.push(tab[0]+";"+tab[1]+";"+tab[2]+"\n");
                                                 //
                                                  //   fileDisplayArea.innerHTML += zawr_konkr_wier_[p]+"\n";
@@ -118,10 +120,10 @@
                                             }
                                             str = "q=";
                                             for(var p=0; p<zawar_pola.length; p++)
-                                            {//alert(zawar_pola[p]+"\t\t"+zawar_pola.length);
+                                            {//alert(" "+zawar_pola[p]+"\n  "+zawar_pola.length);
                                                 if(zawar_pola[p]!="")
                                                 { 
-                                                    str += zawar_pola[p]+"\n";
+                                                    str += zawar_pola[p]+"";
                                                 //    fileDisplayArea.innerHTML += zawar_pola[p]+"\n";
                                                 }                                              
                                             }  

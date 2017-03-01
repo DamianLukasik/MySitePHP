@@ -36,7 +36,7 @@
                     $tab = explode(";",$str);
                     $leng = count($tab) - 3;
                     array_push($leng_arr,$leng);
-              //      echo $leng;
+                //    echo $leng." <br>  ".$str."<br>";
                 }                     
             }
             $leng_ = max($leng_arr);
@@ -46,21 +46,22 @@
                 ."<input class='title' value='Zaczytaj ofertę dostawcy nr ".($i+1)."' style='margin: 0px;text-align: left;width: 250px;'/>"
                 ."<input onchange='wczytaj(this,".($i+1).");' type='file' name='upload_1' class='upload'>"
                 ."</div>";
-            }
+            }          
+            // }
             
-                          
-           // }
-            /*
-           
+            ////tu
+            echo "<br><br>"
+                . "<input id='txt_roznica_procentowa' type='number' value='0' min='0' max='100' ></input><label>  %  </label>"
+                . "<input id='btn_roznica_procentowa' type='button' onclick='modify()' value='Zatwierdź' ></input>";
+        
             
-            */
         //    echo "<input type='button' value='Zaczytaj ofertę dostawcy głównego' onclick='wczytaj(0);'></input><br>";
         //    echo "<input type='button' value='Zaczytaj ofertę dostawcy nr 1' onclick='wczytaj(1);'></input><br>";
-            echo "</div></td><td style='border:none;'>";
+            echo "</td><td style='border:none;'>";
         
             if(isset($_POST['q'])){
                 
-                $czesci = explode("\n", $_POST['q']); 
+                $czesci = explode("\n", $_POST['q']);
                 $count = count($czesci);
                 echo "<label id='lb_liczba_produktow' style='visibility:hidden;'>".$count."</label>";
                                 
@@ -92,18 +93,33 @@
                 {
                     echo "<th>Dostawca ".($o-1)."</th>";
                 }
+                echo  "</tr></thead>";
+           
+                for($i = 0; $i < $count-2 ;$i++)
+                {
+                //    echo "<tr><td>".$czesci[$i]."</td></tr>";
+                    $czesci_w = explode(";",$czesci[$i]); 
+                    echo "<tr>"
+                        . "<td id='dost_numer_".$i."'>".$czesci_w[0]."</td>"
+                        . "<td id='dost_nazwa_".$i."'>".$czesci_w[1]."</td>";    
+                    $str = "";
+                    $count_w = count($czesci_w);
+                    for($j = 2 ;$j < $leng_+2 ;$j++)
+                    {//($leng_+2)
+                        $str = $str."<td id='dost".($j-2)."_".$i."'>";
+                        if($j<$count_w)      
+                        {
+                            $str = $str.$czesci_w[$j]."</td>";
+                        }
+                        else
+                        {
+                            $str = $str."0.00</td>";
+                        }                        
+                    }//$czesci_w[$j]
+                    echo $str."</tr>";
+                }
                 
-                   /*     . "<th>Dostawca 1</th>"
-                        . "<th>Dostawca 2</th>"
-                        . "<th>Dostawca 3</th>"*/
-                    echo  "</tr></thead>";
-                   /* . "<tfoot><tr>"
-                        . "<td> </td>"
-                        . "<td> </td>"
-                        . "<td> </td>"
-                        . "<td> </td>"
-                    . "</tr></tfoot>";*/
-                
+                /*
                 for($i = 0; $i < $count-1; $i++)
                 {                    
                     $str = $czesci[$i];
@@ -137,7 +153,7 @@
                  //   $str = iconv(mb_detect_encoding($str), "utf-8//IGNORE",$str);                     
                     echo $str;
                 }
-                echo "</td></tr></table><br></td></tr></table>";
+                echo "</td></tr></table><br></td></tr></table>";*/
             }
             else
             {
@@ -145,9 +161,6 @@
             }
         ?>
              
-        <br><br>
-        <input id="txt_roznica_procentowa" type="number" value="0" min="0" max="100" ></input><label>  %  </label>
-        <input id="btn_roznica_procentowa" type="button" onclick="modify()" value="Zatwierdź" ></input>
         <script>
         var kolor1 = "#66CC66";
         var kolor2 = "#FFFFFF";
@@ -168,7 +181,7 @@
                     for(var j = 0;j<col;j++ )
                     {
                      //   if(i==9)
-                    //    alert(j+" "+col+"  ");
+                    //    alert(j+" "+col+"  "+i+"\n"+document.getElementById('dost'+j+'_'+i).innerHTML);
                         if(document.getElementById('dost'+j+'_'+i)!=null)
                         {
                         //    if(i==9)

@@ -53,11 +53,13 @@
                 // Form
                 var form = document.getElementsByName("uploadForm");
                 // On change
-                var wiersze = [];
+                var wiersze = []; var str="q=";
                 for( item in uploader ) {
                     // Detect changes
                     uploader[item].onchange = function() {
+                        var str="q=";
                         var fileDisplayArea = document.getElementById('txtArea_DoWysłania');
+                        var zawr_wszys_plików = "";
                         var j = 0, k = this.files.length;
                         if(k > 5)
                         {
@@ -69,79 +71,140 @@
                             for (var i = 0; i < k; i++) {
                                 var reader = new FileReader();
                                 reader.onload = function (evt) {
-                                    if (evt.target.readyState == FileReader.DONE) {   
-                                        
-                                        var zawartosc_pliku = evt.target.result;
-                                       // fileDisplayArea.innerHTML = zawartosc_pliku
-                                        var tabela_zawart_pliku = zawartosc_pliku.split("\n");
-                                        
-                                        for(var tzp_i=0;tzp_i<tabela_zawart_pliku.length;tzp_i++)
+                                  //  str = "q=";
+                                    if (evt.target.readyState == FileReader.DONE) {
+                                        var str_ = evt.target.result;                                        
+                                        zawr_wszys_plików+=str_+"@";
+                                    //    alert(zawartość_wszystkich_plików);
+                                        var zawr_konkr_plików = zawr_wszys_plików.split("@");
+                                    //    alert(zawr_konkr_plików.length);
+                                    //    fileDisplayArea.innerHTML = "";//zawr_konkr_plików; 
+                                        ////
+                                        if(zawr_konkr_plików.length==2)
                                         {
-                                            var wiersze_tab_zawart_pliku = tabela_zawart_pliku[tzp_i].split(";");                                            
-                                            for(var wtzp_i=0;wtzp_i<wiersze_tab_zawart_pliku.length;wtzp_i++)
+                                        //    alert("jeden plik"); 
+                                            fileDisplayArea.innerHTML = "";
+                                            for(var k=0; k<zawr_konkr_plików.length-1; k++)
                                             {
-                                                //alert(wiersze+"\n\n"+zawart_pola_tekstowego);
-                                                   
-                                                var zamiana = wiersze_tab_zawart_pliku[1];
-                                                wiersze_tab_zawart_pliku[1] = wiersze_tab_zawart_pliku[2];
-                                                wiersze_tab_zawart_pliku[2] = zamiana;
-                                                alert(">  "+wiersze_tab_zawart_pliku);
-                                                                                                       
-                                                for(var id_wiersze=0;id_wiersze<wiersze.length;id_wiersze++)
-                                                {                                                     
-                                                    var okreslony_wiersz = wiersze[id_wiersze];   
-                                                    
-                                                }
-                                                fileDisplayArea.innerHTML += wiersze_tab_zawart_pliku[wtzp_i];                                                
-                                                if(wtzp_i<wiersze_tab_zawart_pliku.length-1)
-                                                {
-                                                //    wiersze.push(";");
-                                                    fileDisplayArea.innerHTML += ";";
-                                                }
-                                            }
-                                            for(var id_wiersze=0;id_wiersze<wiersze.length;id_wiersze++)
-                                            {
-                                                var tmp = wiersze[id_wiersze].split(";");
-                                                //alert(id_wiersze+"-"+wiersze.length+"\n"+">\t"+wiersze[id_wiersze]+"\t<");
-                                                for(var id_wiersze_=0;id_wiersze_<wiersze.length;id_wiersze_++)
-                                                {
-                                                    // alert(id_wiersze+"-"+wiersze.length+"\n"+">\t"+wiersze[id_wiersze]+"\t<");
-                                                    var tmp_ = wiersze[id_wiersze_].split(";");
-                                                    if(tmp_[2]==tmp[2])
-                                                    {
-                                                        if(tmp_[1]!=tmp[1])
-                                                        {
-                                                            alert(tmp_+"\n\n=_=_=\n\n"+tmp);
-                                                            
-                                                          //  wiersze[id_wiersze] = 
-                                                            
-                                                            alert(wiersze[id_wiersze]);
-                                                                
-                                                        //    tmp[1];                                                            
-                                                        //    wiersze[id_wiersze] = 
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            wiersze.push(tabela_zawart_pliku[tzp_i]);
-                                         //   alert(wiersze_tab_zawart_pliku[0]+"\t\t"+wiersze[tzp_i]+"\n\n\t\t"+wiersze);
-                                        }
-                                        fileDisplayArea.innerHTML += "\n";  
-                                       // wiersze.push("\n");
-                                        //=======
-                                        /*
-                                        var zawartosc = fileDisplayArea.innerHTML;
-                                
-                                        var tabela_zawartosci = zawartosc.split("\n");
+                                                var zawr_konkr_wier_ = zawr_konkr_plików[k].split("\n");
 
-                                        for(var idx_tab_zawart;idx_tab_zawart<tabela_zawartosci.length-1;idx_tab_zawart++)
+                                                for(var p=0; p<zawr_konkr_wier_.length; p++)
+                                                {
+                                                //    alert(zawr_konkr_wier_[p]);  
+                                                    var tab = zawr_konkr_wier_[p].split(";");
+                                                //    alert(tab);
+                                                    var tmp = tab[1];
+                                                    if(p==zawr_konkr_wier_.length-1)
+                                                    {
+                                                        tab[1]  = tab[2].substring(0,tab[2].length);
+                                                    }else{
+                                                        tab[1]  = tab[2].substring(0,tab[2].length-1);
+                                                    }
+                                                    tab[2]  = tmp;
+                                                    fileDisplayArea.innerHTML += tab[0]+";"+tab[1]+";"+tab[2]+"\n";
+                                                //
+                                                 //   fileDisplayArea.innerHTML += zawr_konkr_wier_[p]+"\n";
+                                                }
+                                            }
+                                        }
+                                        else
                                         {
-                                            fileDisplayArea.innerHTML = tabela_zawartosci[idx_tab_zawart];                                    
-                                        }*/
+                                        //    alert("wiele plików");    
+                                            
+                                            var zawar_pola = fileDisplayArea.innerHTML.split("\n");
+                                                                    
+                                        //    alert(zawar_pola+"\n\n\n"+zawr_konkr_plików);
+                                            fileDisplayArea.innerHTML = "";
+                                            for(var p=0; p<zawar_pola.length-1; p++)
+                                            {
+                                            //    alert(zawar_pola[p]+"\n\n");
+                                                for(var k=1+zawr_konkr_plików.length-3; k<zawr_konkr_plików.length-1; k++)
+                                                {
+                                                    var log = true;
+                                                    var zawr_konkr_wier_ = zawr_konkr_plików[k].split("\n");
+                                                    var o;
+                                                    for(o=0; o<zawr_konkr_wier_.length; o++)
+                                                    {
+                                                     //   alert((zawar_pola.length-1)+"   "+zawr_konkr_wier_.length+"\n===\n\n"+
+                                                     //           zawar_pola+"  \n\n "+zawr_konkr_wier_); 
+                                                     //   alert(zawar_pola[p].split(";")[0]+"\n"+zawr_konkr_wier_[o].split(";")[0]);
+                                                        if(zawar_pola[p].split(";")[0]==zawr_konkr_wier_[o].split(";")[0])
+                                                        {
+                                                         //   alert(zawar_pola[p]+"      "+zawr_konkr_wier_[o]);
+                                                         //   zawar_pola
+                                                       //     alert("after> "+zawar_pola[p]);
+                                                            zawar_pola[p] += ";"+zawr_konkr_wier_[o].split(";")[1];
+                                                        //    alert("pass > "+zawar_pola[p]);
+                                                        }
+                                                        if((zawar_pola.length-1)<zawr_konkr_wier_.length)
+                                                        {
+                                                          //  alert((zawar_pola.length-1)+"  "+zawr_konkr_wier_.length+"\n\n"+(1+p)+"  "+(1+o));
+                                                          //  alert(zawar_pola[p].split(";")[0]+"  "+zawr_konkr_wier_[o].split(";")[0]);
+                                                            if(zawar_pola[p].split(";")[0]+"  "+zawr_konkr_wier_[o].split(";")[0] && log==true)
+                                                            {
+                                                            //    alert("X");
+                                                            //    alert(zawr_konkr_wier_[zawr_konkr_wier_.length-1]);
+                                                                var tab_ = zawr_konkr_wier_[zawr_konkr_wier_.length-1].split(";");
+                                                              //  alert(tab_);                                                                
+                                                                var tmp_ = tab_[1];
+                                                                tab_[1]  = tab_[2];
+                                                                tab_[2]  = tmp_;
+                                                            
+                                                                zawar_pola.push(tab_[0]+";"+tab_[1]+";"+tab_[2]+"\n");
+                                                              //  zawar_pola[p] += ";"+zawr_konkr_wier_[o].split(";")[1];
+                                                           //     alert(zawar_pola);
+                                                                log = false;
+                                                            }
+                                                            else
+                                                            {
+                                                            //    alert("Y");
+                                                                log = true;
+                                                            }
+                                                        }
+                                                        /*
+                                                        if((zawar_pola.length-1)<zawr_konkr_wier_.length)
+                                                        {
+                                                            alert(zawr_konkr_wier_[o]);
+                                                            for(var t=0; t<zawr_konkr_wier_.length; t++)
+                                                            {
+                                                                
+                                                            }
+                                                        }*/
+                                                    }
+                                                }                                               
+                                            }
+                                            str = "q=";
+                                            for(var p=0; p<zawar_pola.length; p++)
+                                            {
+                                                if(zawar_pola[p]!="")
+                                                { 
+                                                    str += zawar_pola[p]+"\n";
+                                                    fileDisplayArea.innerHTML += zawar_pola[p]+"\n";
+                                                }                                              
+                                            }  
+                                       //     alert(str);
+                                        }
                                     }
                                 };
                                 reader.readAsText(this.files[i]);                               
                             }
+                            xmlHTTP = new XMLHttpRequest();                          
+                            //   alert(str);                        
+                            xmlHTTP.open("POST", "tabelka.php", true);
+                            xmlHTTP.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                            xmlHTTP.setRequestHeader("Content-length", str.length);
+                            xmlHTTP.setRequestHeader("Connection", "close");
+                            xmlHTTP.onreadystatechange = function() {
+                                //Call a function when the state changes.
+                                if(xmlHTTP.readyState == 4 && xmlHTTP.status == 200) {
+                                    document.write(xmlHTTP.responseText);
+                                }
+                            };
+                            function f() {
+                            //    alert(str);
+                                xmlHTTP.send(str);
+                            }
+                            setTimeout(f, 950);
                         }
                     };
                 }     
@@ -151,7 +214,7 @@
             <input type="file" name="file" value="" width="100" />            
             -->            
         </form>
-        ​<textarea id="txtArea_DoWysłania" rows="30" cols="70"></textarea>
+        ​<textarea id="txtArea_DoWysłania" style="visibility: hidden;" rows="1" cols="1"></textarea>
                            
     </body>
 </html>

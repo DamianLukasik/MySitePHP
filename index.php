@@ -83,6 +83,7 @@
                                         if(zawr_konkr_plików.length==2)
                                         {
                                         //    alert("jeden plik"); 
+                                            var zawar_pola = [];
                                             fileDisplayArea.innerHTML = "";
                                             for(var k=0; k<zawr_konkr_plików.length-1; k++)
                                             {
@@ -94,18 +95,36 @@
                                                     var tab = zawr_konkr_wier_[p].split(";");
                                                 //    alert(tab);
                                                     var tmp = tab[1];
-                                                    if(p==zawr_konkr_wier_.length-1)
+                                                    
+                                                    var patt = new RegExp("\n");
+                                                    var res = patt.test(tab[2]);
+                                                    
+                                                    if(res)
                                                     {
-                                                        tab[1]  = tab[2].substring(0,tab[2].length);
-                                                    }else{
-                                                        tab[1]  = tab[2].substring(0,tab[2].length-1);
+                                                        tab[1]  = tab[2].substirng(0,tab[2].length-1);
+                                                                alert(tab[1]);
                                                     }
-                                                    tab[2]  = tmp;
+                                                    else
+                                                    {
+                                                        tab[1]  = tab[2];
+                                                    }
+                                                    tab[2]  = tmp;                                                    
                                                     fileDisplayArea.innerHTML += tab[0]+";"+tab[1]+";"+tab[2]+"\n";
+                                                    alert(tab[0]+";"+tab[1]+";"+tab[2]+"\n");
+                                                    zawar_pola.push(tab[0]+";"+tab[1]+";"+tab[2]+"\n");
                                                 //
                                                  //   fileDisplayArea.innerHTML += zawr_konkr_wier_[p]+"\n";
                                                 }
                                             }
+                                            str = "q=";
+                                            for(var p=0; p<zawar_pola.length; p++)
+                                            {//alert(zawar_pola[p]+"\t\t"+zawar_pola.length);
+                                                if(zawar_pola[p]!="")
+                                                { 
+                                                    str += zawar_pola[p]+"\n";
+                                                //    fileDisplayArea.innerHTML += zawar_pola[p]+"\n";
+                                                }                                              
+                                            }  
                                         }
                                         else
                                         {
@@ -201,7 +220,7 @@
                                 }
                             };
                             function f() {
-                            //    alert(str);
+                                alert(str);
                                 xmlHTTP.send(str);
                             }
                             setTimeout(f, 950);

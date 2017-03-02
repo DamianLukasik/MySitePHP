@@ -21,8 +21,8 @@
         
             echo "Tabelka z produktami<br><br>";   
         //    echo ''.$_POST['q'];
-            echo "<table style='border:none;'><tr><td style='border:none;'><div id='pn_panel_btn'>";
-            echo "<div class='browse-wrap' style='width: 250px;'>"
+            echo "<table style='border:none;'><tr><td colspan='2' style='border:none;'><div id='pn_panel_btn_' >";
+            echo "<div id='pn_panel_btn' class='browse-wrap' style='width: 250px;'>"
             ."<input class='title' value='Zaczytaj ofertę dostawcy głównego' style='margin: 0px;text-align: left;width: 250px;'/>"
             ."<input onchange='wczytaj(this,0);' type='file' name='upload_0' class='upload'>"
             ."</div>";
@@ -48,16 +48,13 @@
                 ."</div>";
             }          
             // }
-            
+           
             ////tu
-            echo "<br><br>"
-                . "<input id='txt_roznica_procentowa' type='number' value='0' min='0' max='100' ></input><label>  %  </label>"
-                . "<input id='btn_roznica_procentowa' type='button' onclick='modify()' value='Zatwierdź' ></input>";
-        
+            echo "</td><td style='border:none;'>";
             
         //    echo "<input type='button' value='Zaczytaj ofertę dostawcy głównego' onclick='wczytaj(0);'></input><br>";
         //    echo "<input type='button' value='Zaczytaj ofertę dostawcy nr 1' onclick='wczytaj(1);'></input><br>";
-            echo "</td><td style='border:none;'>";
+            
         
             if(isset($_POST['q'])){
                 
@@ -75,7 +72,7 @@
                 $max = 0;
                 
                 for($i = 0; $i < $count-1; $i++)
-                {  	
+                {
                     $str = $czesci[$i];
                     $tab = explode(";",$str); 
                     $leng = count($tab);
@@ -99,6 +96,11 @@
                 {
                 //    echo "<tr><td>".$czesci[$i]."</td></tr>";
                     $czesci_w = explode(";",$czesci[$i]); 
+                    
+                    if($czesci_w[0]==null)
+                    {
+                        break;
+                    }                    
                     echo "<tr>"
                         . "<td id='dost_numer_".$i."'>".$czesci_w[0]."</td>"
                         . "<td id='dost_nazwa_".$i."'>".$czesci_w[1]."</td>";    
@@ -118,7 +120,11 @@
                     }//$czesci_w[$j]
                     echo $str."</tr>";
                 }
-                
+                echo "<tr>";
+                echo "<br><br>"
+                    . "<input id='txt_roznica_procentowa' type='number' value='0' min='0' max='100' ></input><label>  %  </label>"
+                    . "<input id='btn_roznica_procentowa' type='button' onclick='modify()' value='Zatwierdź' ></input>";
+                echo "</tr>";
                 /*
                 for($i = 0; $i < $count-1; $i++)
                 {                    
@@ -416,9 +422,10 @@
         function wczytaj(elem,liczba){
             wyczysc_z_kolorow();
             var numer = document.getElementById("pn_panel_btn").childElementCount-1; 
+           // alert(numer+"\n"+liczba+"\n====");
             if(numer>liczba)
             {
-                //alert("> "+liczba+" <");
+                alert("zamiana danych\n"+numer+"\t> "+liczba+" <");
                 //zamienia miejscami dane z wybranej kolumny
                 var reader = new FileReader();
                 var spr_1="";
@@ -433,11 +440,8 @@
                           //  arr.push(spr_1[i]);
                           //  alert(arr[i]+"");
                           //  alert(liczba+" "+i+" "+spr_1[i]+"    "+spr_1[i].split(";")[2]);
-                          //  alert(document.getElementById('dost'+liczba+'_'+i).);
-                            
-                        
+                          //  alert(document.getElementById('dost'+liczba+'_'+i).); 
                             document.getElementById('dost'+liczba+'_'+i).innerHTML = ""+spr_1[i].split(";")[1];
-                            
                           //  document.getElementById('dost'+liczba+'_'+i).value = spr_1[i].split(";")[1];
                         }
                     }
@@ -446,7 +450,7 @@
             }
             else
             {
-         //   alert(numer);
+            alert("nowa kolumna\n"+numer+" \t "+liczba);
           /*  if(elem.name[7]==numer)
             {                
                 alert(elem.name[7]+"  "+numer);
@@ -458,9 +462,9 @@
                 reader.readAsText(elem.files[0]);//
             }
             else
-            {*/
-            //   var uploader = document.getElementsByName(elem.name);
-             //  uploader.files[i];            
+            {
+               var uploader = document.getElementsByName(elem.name);
+               uploader.files[i];     */       
                 var reader = new FileReader();
                 var spr_1="";//wczytuje nowe dane
                 reader.onload = function (evt) {
@@ -481,7 +485,7 @@
                             }*/
                         }
                     //    alert(str);
-                        var div_btn = document.getElementById("pn_panel_btn");
+                        var div_btn = document.getElementById("pn_panel_btn_");
                         var numer = div_btn.childElementCount+1;
                         var node = document.createElement("DIV");
                         node.setAttribute("class", "browse-wrap");

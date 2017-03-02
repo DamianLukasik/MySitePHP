@@ -136,28 +136,29 @@
         <script>
         var kolor1 = "#66CC66";
         var kolor2 = "#FFFFFF";
-        
+        var nieskończenie_duza_wartość = 999999999.99;
+		
         function modify(){
             var a = parseInt(document.getElementById('txt_roznica_procentowa').value);
-            var row = parseInt(document.getElementById('tab_produkty').rows.length);
-            var col = parseInt(document.getElementById('tab_produkty').rows[0].cells.length)-2;
+            var liczba_wierszy = parseInt(document.getElementById('tab_produkty').rows.length);
+            var liczba_kolumn = parseInt(document.getElementById('tab_produkty').rows[0].cells.length)-2;
             wyczysc_z_kolorow();
           //  alert(col+" "+row);
             var e0,e1,e2;
             if(a==0)
             {//wyszukuje najmniejszą
-                for(var i=0;i<row;i++)
+                for(var id_wiersza=0;id_wiersza<liczba_wierszy;id_wiersza++)
                 {
                 //    alert(row);
                     var elem_ = [];
-                    for(var j = 0;j<col;j++ )
+                    for(var id_kolumny = 0;id_kolumny<liczba_kolumn;id_kolumny++ )
                     {
                      //   if(i==9)
-                    //    alert(j+" "+col+"  "+i+"\n"+document.getElementById('dost'+j+'_'+i).innerHTML);
-                        if(document.getElementById('dost'+j+'_'+i)!=null)
+                    //    alert(j+" "+liczba_kolumn+"  "+i+"\n"+document.getElementById('dost'+j+'_'+i).innerHTML);
+                        if(document.getElementById('dost'+id_kolumny+'_'+id_wiersza)!=null)
                         {
                         //    if(i==9)
-                         //   alert(document.getElementById('dost'+j+'_'+i).innerHTML+"\n"+j+"\t"+i+"\n"+col);
+                         //   alert(document.getElementById('dost'+j+'_'+i).innerHTML+"\n"+j+"\t"+i+"\n"+liczba_kolumn);
                             
                         //    if(i==9)
                        //     alert("dost"+j+"_"+i+"\n"+document.getElementById('dost'+j+'_'+i).innerHTML);
@@ -169,14 +170,14 @@
                          //   if(i==9)
                          //   alert(parseInt(document.getElementById('dost'+j+'_'+i).innerHTML)+1);
                             
-                            if(parseInt(document.getElementById('dost'+j+'_'+i).innerHTML)!=0)
-                            {//alert(""+i+"<"+row+"\n"+j+"<"+col+"\n\n"+document.getElementById('dost'+j+'_'+i).innerHTML);
-                                elem_.push(parseFloat(document.getElementById('dost'+j+'_'+i).innerHTML));
+                            if(parseInt(document.getElementById('dost'+id_kolumny+'_'+id_wiersza).innerHTML)!=0)
+                            {//alert(""+i+"<"+liczba_wierszy+"\n"+j+"<"+liczba_kolumn+"\n\n"+document.getElementById('dost'+j+'_'+i).innerHTML);
+                                elem_.push(parseFloat(document.getElementById('dost'+id_kolumny+'_'+id_wiersza).innerHTML));
                             }
 							else
 							{
 								//alert();
-								elem_.push(1000000000000000000000.00);
+								elem_.push(nieskończenie_duza_wartość);
 							}
                         }                        
                         else
@@ -191,61 +192,54 @@
                             parseFloat(document.getElementById('dost1_'+i).innerHTML),
                             parseFloat(document.getElementById('dost2_'+i).innerHTML)];*/
 							//alert(elem_);
-					wart = Math.min.apply(null, elem_);	
-					
-				//	alert(wart);
-					
-					wart = elem_.indexOf(wart);
-					
+					wart = Math.min.apply(null, elem_);						
+				//	alert(wart);					
+					wart = elem_.indexOf(wart);					
 				//	alert(wart);
 					
                  //   if(i==9)
                  //   {
                     //    alert(wart+" - "+i+" - "+elem_+"  ");
                 //    }
-                    for(var j = 0;j<elem_.length;j++ )
+                    for(var id_elementu = 0;id_elementu<elem_.length;id_elementu++ )
                     {
                      //   elem_.push(parseFloat(document.getElementById('dost'+j+'_'+i).innerHTML));
-                        document.getElementById('dost'+j+'_'+i).style.backgroundColor = kolor2;
+                        document.getElementById('dost'+id_elementu+'_'+id_wiersza).style.backgroundColor = kolor2;
                       //  alert(elem_[j]);
                     }
                //     document.getElementById('dost0_'+i).style.backgroundColor = kolor2;
                 //    document.getElementById('dost1_'+i).style.backgroundColor = kolor2;
                 //    document.getElementById('dost2_'+i).style.backgroundColor = kolor2;  
                     if(elem_.length>=1)
-                    {//alert(elem_+"   "+elem_[wart]+"   "+document.getElementById('dost'+(wart)+'_'+i).innerHTML);
-					//	while(document.getElementById('dost'+(wart)+'_'+i).innerHTML=="0.00")
-					//	{
-					//		wart++;
-					//	}
-                        document.getElementById('dost'+(wart)+'_'+i).style.backgroundColor = kolor1;
+                    {
+                        document.getElementById('dost'+(wart)+'_'+id_wiersza).style.backgroundColor = kolor1;
                     }                    
                  //   alert(document.getElementById('dost'+wart+'_'+i).value);
                 }
             }
             else
             {//wyszukuje różnice
-                for(var i=0;i<row;i++)//po wszystkich wierszach
+                for(var id_wiersza=0;id_wiersza<liczba_wierszy;id_wiersza++)//po wszystkich wierszach
                 {
                     var elem_ = []; 
                     var e_;
-                    for(var j = 0;j<col;j++ )//po wszystkich komórkach
-                    {            
-                        if(document.getElementById('dost'+j+'_'+i)!=null && 
-                                parseInt(document.getElementById('dost'+j+'_'+i).innerHTML)!=0)
+                    for(var id_kolumny = 0;id_kolumny<liczba_kolumn;id_kolumny++ )//po wszystkich komórkach
+                    {   
+                        if(document.getElementById('dost'+id_kolumny+'_'+id_wiersza)!=null && 
+                                parseInt(document.getElementById('dost'+id_kolumny+'_'+id_wiersza).innerHTML)!=0)
                         {
-                            elem_.push(parseFloat(document.getElementById('dost'+j+'_'+i).innerHTML));
-                            document.getElementById('dost'+j+'_'+i).style.backgroundColor = kolor2;                             
+                            elem_.push(parseFloat(document.getElementById('dost'+id_kolumny+'_'+id_wiersza).innerHTML));
+                            document.getElementById('dost'+id_kolumny+'_'+id_wiersza).style.backgroundColor = kolor2;                             
                         }
                         else
                         {
-                            break;                            
+                            elem_.push(nieskończenie_duza_wartość);                       
                         }
                        // alert(elem_[j]);
                        // e_.push(roznica_procentowa(elem_[j],a));       
                        // alert("różnica procentowa"+e_[j]);
                     }  
-                    
+                //    alert(elem_);
                     var r = 0;
                     var wart_arr = [];
                     /*
@@ -280,84 +274,19 @@
                         w     = Math.min.apply(null, wart_arr);
                         w_idx = wart_arr.indexOf(w);
 
-                      //  alert(wart_arr+" \n"+w_idx+"  "+w);    
+                     //   alert(" wartość argumentu = "+wart_arr+" \n\n idek wartość = "+w_idx+" wartość = "+w);    
                         if(w!="1024")
                         {
-                            document.getElementById('dost'+(w_idx+1)+'_'+i).style.backgroundColor = kolor1;       
+                            document.getElementById('dost'+(w_idx+1)+'_'+id_wiersza).style.backgroundColor = kolor1;       
                             break;
                         }
                         else
                         {
-                            document.getElementById('dost0_'+i).style.backgroundColor = kolor1;    
+                            document.getElementById('dost0_'+id_wiersza).style.backgroundColor = kolor1;    
                             break;
                       //      alert();
                         }
                     }
-                  /**/
-                    
-                    
-                    /*                    
-                    var max_war_ar = Math.max.apply(null, wart_arr);
-                //    alert(wart_arr.length);
-                    for(var k=0;k<wart_arr.length;k++)
-                    {
-                      //  alert(wart_arr[k] + " - " + k);
-                        if(wart_arr[k]>a)// & wart_arr[k]==max_war_ar)
-                        {
-                            for(var j=0;j<k;j++)
-                            {
-                                document.getElementById('dost'+(j+1)+'_'+i).style.backgroundColor = kolor2;
-                            }                             
-                            document.getElementById('dost'+(k+1)+'_'+i).style.backgroundColor = kolor1;
-                        }
-                    }       */    
-                    /*
-                        if(wart>a)
-                        {
-                            if(j!=0)
-                            {
-                                                               
-                            }
-                            
-                        }
-                        else
-                        {
-                       //     alert();
-                        }*/
-                  //  }                    
-                    /*
-                    for(var j=0;j<col-1;j++)
-                    {
-                        e_ = [];
-                      //  for(var k=j+1;k<col;k++)
-                      //  {
-                          //  alert("> "+elem_[j]+" - "+elem_[k]+" <");
-                          //  e_.push(roznica_procentowa(elem_[j],elem_[k])); 
-                            wart = roznica_procentowa(elem_[0],elem_[j+1]);
-                          //  alert("różnica procentowa"+e_[r++]);
-                            alert("różnica procentowa  > "+elem_[j]+" - "+elem_[k]+" < = "+wart);
-                            if(wart>a)
-                            {
-                              //  document.getElementById('dost'+j+'_'+i).style.backgroundColor = kolor2;
-                            }
-                      //  }                        
-                    }*/                    
-                    /*
-                //    alert(e0);
-                    for(var y=1;y<elem_.length;y++)
-                    {
-                        if(elem_[y]>e0){
-                            e_.push(elem_[y] - e0);
-                        }else{
-                            e_.push(e0 - elem_[y]);
-                        }                      
-                    }
-                    
-                    var wart = Math.min.apply(null, e_);
-                    wart = e_.indexOf(wart);                     
-                  //  alert("różnica procentowa = "+e0+"  "+elem_[1]+"="+e1+"  --  "+elem_[2]+"="+e2);
-                    document.getElementById('dost'+(wart+1)+'_'+i).style.backgroundColor = kolor1;
-     */
                 }
             }
         }
@@ -538,11 +467,11 @@
                                 //  alert(arr[i]);
                                 spr_2 = arr[log].split(";");
                                 newCell.id="dost"+(numer-2)+"_"+i;//alert("dost"+(numer-2)+"_"+i);
-                                newCell.innerHTML = ""+spr_2[1];                                
+                                newCell.innerHTML = ""+spr_2[1];
                             }
                             else
-                            {                                
-                                spr_2 = arr[r].split(";");
+                            {
+                                spr_2 = arr[r].split(";");//alert(spr_2);
                                 var lic_ = tblBodyObj.rows.length+1;
                             //    alert(lic_);
                                 newRow = tab_produkty.insertRow(lic_);
@@ -555,6 +484,20 @@
                                 newCell_1.id="dost_nazwa_"+i;
                                 var newCell_2;
                                 
+							//	alert(arr.length+"\n"+arr);
+							////
+							
+								newCell_2 = newRow.insertCell(2);
+								newCell_2.innerHTML = spr_2[1];
+								newCell_2.id="dost0_"+i;
+								for(var q=3;q<=liczba+2;q++)
+                                {
+									newCell_2 = newRow.insertCell(q);
+                                    newCell_2.innerHTML = "0.00";
+									newCell_2.id="dost"+(q-2)+"_"+i;
+								}
+							/*
+								////
                                 for(var q=2;q<=liczba+2;q++)
                                 {
                                 //    alert(q+"  "+liczba+"  "+spr_2[1]);
@@ -563,9 +506,13 @@
 									newCell_2.id="dost"+(q-2)+"_"+i;
                                //     alert("dost"+(numer-3)+"_"+i);
                                 }
-                                newCell_2.innerHTML = spr_2[1];   
+                                newCell_2.innerHTML = spr_2[1];
                             //    alert("dost"+(numer-3)+"_"+i);
                                 newCell_2.id="dost"+(numer-2)+"_"+i;
+								////
+								*/
+								
+								
                                 /*
                                 var cell1
                                 var cell2 = row.insertCell(1);

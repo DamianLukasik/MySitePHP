@@ -16,47 +16,44 @@
         }
         </style>
     </head>
-    <body>           
+    <body>      
+
+		<table style='border:none;'><tr><td style='border:none;'>
+	
         <?php 
-        
-            echo "Tabelka z produktami<br><br>";   
-        //    echo ''.$_POST['q'];
-            echo "<table style='border:none;'><tr><td colspan='2' style='border:none;'><div id='pn_panel_btn_' >";
-            echo "<div id='pn_panel_btn' class='browse-wrap' style='width: 250px;'>"
-            ."<input class='title' value='Zaczytaj ofertę dostawcy głównego' style='margin: 0px;text-align: left;width: 250px;'/>"
-            ."<input onchange='wczytaj(this,0);' type='file' name='upload_0' class='upload'>"
-            ."</div>";
-            $leng_arr = array();
-            if(isset($_POST['q'])){
-                $czesci = explode("\n", $_POST['q']); 
-                $count = count($czesci);
-                for($i = 0; $i < $count-1; $i++)
-                { 
-                    $str = $czesci[$i];
-                    $tab = explode(";",$str);
-                    $leng = count($tab) - 3;
-                    array_push($leng_arr,$leng);
-                //    echo $leng." <br>  ".$str."<br>";
-                }                     
-            }
-            $leng_ = max($leng_arr);
-            for($i=0; $i<=$leng_ ;$i++)
-            {
-                echo "<div class='browse-wrap' style='width: 250px;'>"
-                ."<input class='title' value='Zaczytaj ofertę dostawcy nr ".($i+1)."' style='margin: 0px;text-align: left;width: 250px;'/>"
-                ."<input onchange='wczytaj(this,".($i+1).");' type='file' name='upload_1' class='upload'>"
-                ."</div>";
-            }          
-            // }
-           
-            ////tu
-            echo "</td><td style='border:none;'>";
-            
-        //    echo "<input type='button' value='Zaczytaj ofertę dostawcy głównego' onclick='wczytaj(0);'></input><br>";
-        //    echo "<input type='button' value='Zaczytaj ofertę dostawcy nr 1' onclick='wczytaj(1);'></input><br>";
-            
-        
-            if(isset($_POST['q'])){
+				//tabela
+				echo "<br>";				
+				echo "Tabelka z produktami<br><br>";   				
+								
+				echo "<TABLE style='border:none;'><TR><TD style='border:none;'>";
+				echo "<div id='pn_panel_btn_' >";
+				echo "<div id='pn_panel_btn' class='browse-wrap' style='width: 250px;'>"
+				."<input class='title' value='Zaczytaj ofertę dostawcy głównego' style='margin: 0px;text-align: left;width: 250px;'/>"
+				."<input onchange='wczytaj(this,0);' type='file' name='upload_0' class='upload'>"
+				."</div>";
+				$leng_arr = array();
+				if(isset($_POST['q'])){
+					$czesci = explode("\n", $_POST['q']); 
+					$count = count($czesci);
+					for($i = 0; $i < $count-1; $i++)
+					{ 
+						$str = $czesci[$i];
+						$tab = explode(";",$str);
+						$leng = count($tab) - 3;
+						array_push($leng_arr,$leng);
+					//    echo $leng." <br>  ".$str."<br>";
+					}                     
+				}
+				$leng_ = max($leng_arr);
+				for($i=0; $i<=$leng_ ;$i++)
+				{
+					echo "<div class='browse-wrap' style='width: 250px;'>"
+					."<input class='title' value='Zaczytaj ofertę dostawcy nr ".($i+1)."' style='margin: 0px;text-align: left;width: 250px;'/>"
+					."<input onchange='wczytaj(this,".($i+1).");' type='file' name='upload_1' class='upload'>"
+					."</div>";
+				}  				
+				echo "</div></TD><TD style='border:none;'>";
+				if(isset($_POST['q'])){
                 
                 $czesci = explode("\n", $_POST['q']);
                 $count = count($czesci);
@@ -119,54 +116,23 @@
                         }                        
                     }//$czesci_w[$j]
                     echo $str."</tr>";
-                }
-                echo "<tr>";
-                echo "<br><br>"
-                    . "<input id='txt_roznica_procentowa' type='number' value='0' min='0' max='100' ></input><label>  %  </label>"
-                    . "<input id='btn_roznica_procentowa' type='button' onclick='modify()' value='Zatwierdź' ></input>";
-                echo "</tr>";
-                /*
-                for($i = 0; $i < $count-1; $i++)
-                {                    
-                    $str = $czesci[$i];
-                    $tab = explode(";",$str); 
-                    
-                    $dost0 = $tab[2];
-                 //   $dost1 = $tab[3];//*$roznica_procentowa;
-                //    $dost2 = $tab[4];
-                    
-                    //
-                    
-                    $str = "<tr>"
-                            . "<td id='dost_numer_".$i."'>".$tab[0]."</td>"
-                            . "<td id='dost_nazwa_".$i."'>".$tab[1]."</td>";                    
-                    
-                    $leng = count($tab);
-                    for($o=2; $o < $leng; $o++)
-                    {
-                     //   echo "<td>".($o-2)."</td>";
-                     //   $tab[$o].s
-                        
-                        $str = $str."<td style='backgroundColor: #FFFFFF;' id='dost".($o-2)."_".$i."'>".$tab[$o]."</td>";                        
-                    }
-                //    echo "</tr>"
-                  //  $str = $str.""
-                    //
-                      //      . "<td style='backgroundColor: #FFFFFF;' id='dost0_".$i."'>".$dost0."</td>"
-                          //  . "<td style='backgroundColor: #FFFFFF;' id='dost1_".$i."'>".$dost1."</td>"
-                          //  . "<td style='backgroundColor: #FFFFFF;' id='dost2_".$i."'>".$dost2."</td>"
-                     //       . "</tr>";
-                 //   $str = iconv(mb_detect_encoding($str), "utf-8//IGNORE",$str);                     
-                    echo $str;
-                }
-                echo "</td></tr></table><br></td></tr></table>";*/
+					
+                }  				
+				echo "</table>";
+				echo "</TD></TR></TABLE>";
             }
             else
             {
                 echo '$_POST jest pusty';
             }
         ?>
-             
+        </td></tr>
+		<tr><td style='border:none;'>
+		<br><br>
+			<input id='txt_roznica_procentowa' type='number' value='0' min='0' max='100' ></input><label>  %  </label>
+			<input id='btn_roznica_procentowa' type='button' onclick='modify()' value='Zatwierdź' ></input>   
+		</td></tr></table>
+			 
         <script>
         var kolor1 = "#66CC66";
         var kolor2 = "#FFFFFF";
@@ -204,9 +170,14 @@
                          //   alert(parseInt(document.getElementById('dost'+j+'_'+i).innerHTML)+1);
                             
                             if(parseInt(document.getElementById('dost'+j+'_'+i).innerHTML)!=0)
-                            {//alert(j+" "+i);
+                            {//alert(""+i+"<"+row+"\n"+j+"<"+col+"\n\n"+document.getElementById('dost'+j+'_'+i).innerHTML);
                                 elem_.push(parseFloat(document.getElementById('dost'+j+'_'+i).innerHTML));
                             }
+							else
+							{
+								//alert();
+								elem_.push(1000000000000000000000.00);
+							}
                         }                        
                         else
                         {
@@ -219,9 +190,15 @@
                   /*  elem_ = [,
                             parseFloat(document.getElementById('dost1_'+i).innerHTML),
                             parseFloat(document.getElementById('dost2_'+i).innerHTML)];*/
-    
-                    var wart = Math.min.apply(null, elem_);
-                    wart = elem_.indexOf(wart);
+							//alert(elem_);
+					wart = Math.min.apply(null, elem_);	
+					
+				//	alert(wart);
+					
+					wart = elem_.indexOf(wart);
+					
+				//	alert(wart);
+					
                  //   if(i==9)
                  //   {
                     //    alert(wart+" - "+i+" - "+elem_+"  ");
@@ -236,7 +213,11 @@
                 //    document.getElementById('dost1_'+i).style.backgroundColor = kolor2;
                 //    document.getElementById('dost2_'+i).style.backgroundColor = kolor2;  
                     if(elem_.length>=1)
-                    {
+                    {//alert(elem_+"   "+elem_[wart]+"   "+document.getElementById('dost'+(wart)+'_'+i).innerHTML);
+					//	while(document.getElementById('dost'+(wart)+'_'+i).innerHTML=="0.00")
+					//	{
+					//		wart++;
+					//	}
                         document.getElementById('dost'+(wart)+'_'+i).style.backgroundColor = kolor1;
                     }                    
                  //   alert(document.getElementById('dost'+wart+'_'+i).value);
@@ -421,11 +402,16 @@
         
         function wczytaj(elem,liczba){
             wyczysc_z_kolorow();
-            var numer = document.getElementById("pn_panel_btn").childElementCount-1; 
-           // alert(numer+"\n"+liczba+"\n====");
+			
+			//naprawić
+			
+			
+            var numer = document.getElementById("pn_panel_btn_").childElementCount-1; 
+        //    alert(numer+"\n"+liczba+"\n====");
             if(numer>liczba)
             {
-                alert("zamiana danych\n"+numer+"\t> "+liczba+" <");
+             //   alert("zamiana danych\n"+numer+"\t> "+liczba+" <");
+				//liczba - numer kolumny, numer - liczba dostaców, nie włączajac dostawcy głównego
                 //zamienia miejscami dane z wybranej kolumny
                 var reader = new FileReader();
                 var spr_1="";
@@ -433,15 +419,15 @@
                     if (evt.target.readyState == FileReader.DONE) {
                         var s = evt.target.result;
                         spr_1 = s.split("\n");                   
-                        var arr = [];
+                        var arr = [];//alert(s+"\n\n"+spr_1.length);
                         for(var i=0;i<spr_1.length;i++)
                         {
-                         //   alert(numer+"   "+liczba+"  "+elem);
+                          //  alert("dost"+liczba+"_"+i+"   element   "+document.getElementById('dost'+liczba+'_'+i)+"\n\n"+numer+"   "+liczba+"  "+elem+"\n"+spr_1[i].split(";")[1]+"\n"+i+"\n====\n"+spr_1.length);
                           //  arr.push(spr_1[i]);
                           //  alert(arr[i]+"");
                           //  alert(liczba+" "+i+" "+spr_1[i]+"    "+spr_1[i].split(";")[2]);
                           //  alert(document.getElementById('dost'+liczba+'_'+i).); 
-                            document.getElementById('dost'+liczba+'_'+i).innerHTML = ""+spr_1[i].split(";")[1];
+							document.getElementById('dost'+liczba+'_'+i).innerHTML = ""+spr_1[i].split(";")[1];
                           //  document.getElementById('dost'+liczba+'_'+i).value = spr_1[i].split(";")[1];
                         }
                     }
@@ -450,7 +436,7 @@
             }
             else
             {
-            alert("nowa kolumna\n"+numer+" \t "+liczba);
+         //   alert("nowa kolumna\n"+numer+" \t "+liczba);
           /*  if(elem.name[7]==numer)
             {                
                 alert(elem.name[7]+"  "+numer);
@@ -551,7 +537,7 @@
                                 var newCell = tblBodyObj.rows[i].insertCell(numer);
                                 //  alert(arr[i]);
                                 spr_2 = arr[log].split(";");
-                                newCell.id="dost"+(numer-2)+"_"+i;
+                                newCell.id="dost"+(numer-2)+"_"+i;//alert("dost"+(numer-2)+"_"+i);
                                 newCell.innerHTML = ""+spr_2[1];                                
                             }
                             else
@@ -574,11 +560,12 @@
                                 //    alert(q+"  "+liczba+"  "+spr_2[1]);
                                     newCell_2 = newRow.insertCell(q);
                                     newCell_2.innerHTML = "0.00";
+									newCell_2.id="dost"+(q-2)+"_"+i;
                                //     alert("dost"+(numer-3)+"_"+i);
                                 }
                                 newCell_2.innerHTML = spr_2[1];   
                             //    alert("dost"+(numer-3)+"_"+i);
-                                newCell_2.id="dost"+(numer-3)+"_"+i;
+                                newCell_2.id="dost"+(numer-2)+"_"+i;
                                 /*
                                 var cell1
                                 var cell2 = row.insertCell(1);

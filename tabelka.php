@@ -274,7 +274,7 @@
                         w     = Math.min.apply(null, wart_arr);
                         w_idx = wart_arr.indexOf(w);
 
-                        alert(" wartość argumentu = "+wart_arr+" \n\n idek wartość = "+w_idx+" wartość = "+w);    
+                    //    alert(" wartość argumentu = "+wart_arr+" \n\n idek wartość = "+w_idx+" wartość = "+w);    
                         if(w=="1024" || w=="41493775833.195015")
                         {
 							document.getElementById('dost0_'+id_wiersza).style.backgroundColor = kolor1;         
@@ -348,7 +348,7 @@
                     if (evt.target.readyState == FileReader.DONE) {
                         var s = evt.target.result;
                         spr_1 = s.split("\n");                   
-                        var arr = [];alert(s+"\n\n"+spr_1.length);
+                        var arr = [];//alert(s+"\n\n"+spr_1.length);
                         for(var i=0;i<spr_1.length;i++)
                         {
                           //  alert("dost"+liczba+"_"+i+"   element   "+document.getElementById('dost'+liczba+'_'+i)+"\n\n"+numer+"   "+liczba+"  "+elem+"\n"+spr_1[i].split(";")[1]+"\n"+i+"\n====\n"+spr_1.length);
